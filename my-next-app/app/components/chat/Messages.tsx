@@ -1,6 +1,6 @@
 "use client";
 
-import { IconSearch, IconEdit, IconSend, IconMoodSmile, IconPaperclip } from "@tabler/icons-react";
+import { IconSearch, IconSend, IconMoodSmile, IconPaperclip } from "@tabler/icons-react";
 import { useState } from "react";
 
 export function MessagesView() {

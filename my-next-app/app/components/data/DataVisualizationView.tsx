@@ -1,6 +1,6 @@
 "use client";
 
-import { IconChartBar, IconChartPie, IconChartLine, IconDownload } from "@tabler/icons-react";
+import { IconChartPie, IconChartLine, IconDownload } from "@tabler/icons-react";
 
 export function DataVisualizationView() {
   const metrics = [

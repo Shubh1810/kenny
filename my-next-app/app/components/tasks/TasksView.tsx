@@ -1,6 +1,6 @@
 "use client";
 
-import { IconPlus, IconFilter, IconCalendar, IconFlag, IconCheck } from "@tabler/icons-react";
+import { IconPlus, IconCalendar, IconFlag, IconCheck } from "@tabler/icons-react";
 import { useState } from "react";
 
 export function TasksView() {

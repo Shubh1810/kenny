@@ -1,6 +1,6 @@
 "use client";
 
-import { IconSearch, IconBook2, IconBookmark, IconStar, IconArrowRight, IconTag } from "@tabler/icons-react";
+import { IconSearch, IconBookmark, IconArrowRight, IconTag } from "@tabler/icons-react";
 import { useState } from "react";
 
 export function KnowledgeBaseView() {

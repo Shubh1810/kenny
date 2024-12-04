@@ -1,6 +1,6 @@
 "use client";
 
-import { IconBook, IconVideo, IconCertificate, IconProgress, IconBookmark, IconClock } from "@tabler/icons-react";
+import { IconBook, IconCertificate, IconProgress, IconBookmark, IconClock } from "@tabler/icons-react";
 import { useState } from "react";
 
 export function LearningHubView() {

@@ -1,9 +1,9 @@
 "use client";
 import { cn } from "../../lib/utils";
-import Link, { LinkProps } from "next/link";
+import { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { IconMenu2, IconX, IconHome, IconMessages, IconBrandGithub, IconSettings, IconLogout } from "@tabler/icons-react";
+import { IconMenu2} from "@tabler/icons-react";
 import Image from "next/image";
 
 interface Links {
@@ -90,7 +90,7 @@ export const DesktopSidebar = ({
     <>
       <motion.div
         className={cn(
-          "h-screen px-4 py-6 hidden md:flex md:flex-col sidebar-gradient bg-gradient-to-b from-[#0A0F1C] via-[#1B2341] to-[#2D3867] flex-shrink-0 shadow-xl",
+          "h-screen px-4 py-6 hidden md:flex md:flex-col sidebar-gradient bg-gradient-to-b from-[#0A0F1C] via-[#1B2341] to-[#2D3867] flex-shrink-0 shadow-xl overflow-x-hidden",
           className
         )}
         animate={{
@@ -120,7 +120,7 @@ export const MobileSidebar = ({
     <>
       <div
         className={cn(
-          "h-16 px-4 flex flex-row md:hidden items-center justify-between bg-black w-full fixed top-0 z-30",
+          "h-16 px-4 flex flex-row md:hidden items-center justify-between bg-black w-full fixed top-0 z-30 overflow-x-hidden",
           className
         )}
         {...props}
@@ -161,7 +161,7 @@ export const MobileSidebar = ({
               exit={{ x: "-100%" }}
               transition={{ type: "tween", duration: 0.2 }}
               className={cn(
-                "fixed inset-y-0 left-0 w-[280px] bg-black p-6 z-50 md:hidden overflow-y-auto",
+                "fixed inset-y-0 left-0 w-[280px] bg-black p-6 z-50 md:hidden overflow-y-auto overflow-x-hidden",
                 className
               )}
             >
@@ -192,19 +192,28 @@ export const SidebarLink = ({
     <div
       onClick={onClick}
       className={cn(
-        "flex items-center justify-start gap-3 group/sidebar py-2 px-3 rounded-lg hover:bg-white/10 transition-all duration-200 cursor-pointer",
+        "flex items-center justify-start gap-3 group/sidebar py-2 px-3 rounded-lg hover:bg-white/10 transition-all duration-200 cursor-pointer overflow-hidden",
         className
       )}
       {...props}
     >
-      <div className="min-w-[24px] flex items-center justify-center">
+      <div className="min-w-[24px] flex items-center justify-center flex-shrink-0">
         {link.icon}
       </div>
 
       <motion.span
+        initial={false}
         animate={{
-          display: animate ? (open ? "inline-block" : "none") : "inline-block",
+          width: animate ? (open ? "auto" : 0) : "auto",
           opacity: animate ? (open ? 1 : 0) : 1,
+        }}
+        transition={{
+          duration: 0.15,
+          ease: "easeInOut",
+        }}
+        style={{
+          display: "block",
+          overflow: "hidden"
         }}
         className="text-neutral-100 text-sm font-medium group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre"
       >

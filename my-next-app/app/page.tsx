@@ -3,7 +3,6 @@
 import { Sidebar, SidebarBody, SidebarLink } from "@/app/components/ui/Sidebar";
 import {
   IconHome,
-  IconUser,
   IconSettings,
   IconLogout,
   IconMessages,
@@ -37,9 +36,6 @@ import Image from 'next/image';
 export default function Home() {
   const [open, setOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('dashboard');
-  const [primaryColor, setPrimaryColor] = useState('#0A0F1C');
-  const [middleColor, setMiddleColor] = useState('#1B2341');
-  const [secondaryColor, setSecondaryColor] = useState('#2D3867');
   
   const handleNavigation = (page: string) => {
     setCurrentPage(page);
@@ -323,22 +319,6 @@ export default function Home() {
     }
   };
 
-  const updateThemeColors = () => {
-    document.documentElement.style.setProperty('--primary-color', primaryColor);
-    document.documentElement.style.setProperty('--middle-color', middleColor);
-    document.documentElement.style.setProperty('--secondary-color', secondaryColor);
-
-    const pageGradients = document.querySelectorAll('.page-gradient');
-    pageGradients.forEach(element => {
-      element.classList.remove('from-[#0A0F1C]', 'via-[#1B2341]', 'to-[#2D3867]');
-      element.classList.add(
-        `from-[${primaryColor}]`,
-        `via-[${middleColor}]`,
-        `to-[${secondaryColor}]`
-      );
-    });
-  };
-
   return (
     <>
       {/* Add background div */}
@@ -392,8 +372,14 @@ export default function Home() {
                     label: "John Doe",
                     href: "#",
                     icon: (
-                      <div className="w-6 h-6 rounded-lg bg-neutral-300 dark:bg-neutral-700" />
-                    ),
+                      <Image 
+                      src="/unknown-user.jpg" 
+                      alt="Unknown User"
+                      width={20}
+                      height={20}
+                      className="rounded-md"
+                    />
+                  ),
                   }}
                   onClick={() => handleNavigation("profile")}
                 />

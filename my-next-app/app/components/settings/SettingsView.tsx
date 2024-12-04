@@ -1,6 +1,6 @@
 "use client";
 
-import { IconBell, IconPalette, IconKey, IconLanguage, IconDeviceLaptop, IconBrain } from "@tabler/icons-react";
+import { IconBell, IconPalette, IconLanguage, IconBrain } from "@tabler/icons-react";
 import { useState } from "react";
 import { HexColorPicker } from "react-colorful";
 

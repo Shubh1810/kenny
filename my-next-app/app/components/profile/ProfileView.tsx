@@ -1,8 +1,23 @@
 "use client";
 
-import { IconEdit, IconKey, IconBell, IconPalette } from "@tabler/icons-react";
+import { useState } from 'react';
+import { IconKey, IconBell, IconPalette } from "@tabler/icons-react";
 
 export function ProfileView() {
+  const [formData, setFormData] = useState({
+    displayName: "John Doe",
+    email: "john.doe@example.com",
+    bio: ""
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   return (
     <div>
       <h1 className="text-2xl font-bold text-white/90 mb-6">Profile</h1>
@@ -23,7 +38,9 @@ export function ProfileView() {
               <label className="block text-sm text-white/60 mb-1">Display Name</label>
               <input
                 type="text"
-                value="John Doe"
+                name="displayName"
+                value={formData.displayName}
+                onChange={handleChange}
                 className="w-full bg-white/5 text-white p-2 rounded-lg border border-white/10 focus:outline-none focus:border-white/20"
               />
             </div>
@@ -31,7 +48,9 @@ export function ProfileView() {
               <label className="block text-sm text-white/60 mb-1">Email</label>
               <input
                 type="email"
-                value="john.doe@example.com"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 className="w-full bg-white/5 text-white p-2 rounded-lg border border-white/10 focus:outline-none focus:border-white/20"
               />
             </div>
