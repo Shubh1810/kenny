@@ -4,6 +4,7 @@ import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { IconMenu2, IconX, IconHome, IconMessages, IconBrandGithub, IconSettings, IconLogout } from "@tabler/icons-react";
+import Image from "next/image";
 
 interface Links {
   label: string;
@@ -89,7 +90,7 @@ export const DesktopSidebar = ({
     <>
       <motion.div
         className={cn(
-          "h-screen px-4 py-6 hidden md:flex md:flex-col bg-gradient-to-b from-[#1a0b2e] via-[#2f1a4e] to-[#421539] flex-shrink-0 shadow-xl",
+          "h-screen px-4 py-6 hidden md:flex md:flex-col sidebar-gradient bg-gradient-to-b from-[#0A0F1C] via-[#1B2341] to-[#2D3867] flex-shrink-0 shadow-xl",
           className
         )}
         animate={{
@@ -119,42 +120,58 @@ export const MobileSidebar = ({
     <>
       <div
         className={cn(
-          "h-10 px-4 py-4 flex flex-row md:hidden  items-center justify-between bg-neutral-100 dark:bg-neutral-800 w-full"
+          "h-16 px-4 flex flex-row md:hidden items-center justify-between bg-black w-full fixed top-0 z-30",
+          className
         )}
         {...props}
       >
-        <div className="flex justify-end z-20 w-full">
-          <IconMenu2
-            className="text-neutral-800 dark:text-neutral-200"
-            onClick={() => setOpen(!open)}
+        <div className="flex items-center gap-2">
+          <Image 
+            src="/kira.jpg" 
+            alt="KIRA Logo"
+            width={32}
+            height={32}
+            className="rounded-lg"
           />
+          <span className="text-lg font-bold text-white">KIRA</span>
         </div>
-        <AnimatePresence>
-          {open && (
+        
+        <button 
+          onClick={() => setOpen(!open)}
+          className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+        >
+          <IconMenu2 className="text-neutral-100 w-6 h-6" />
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {open && (
+          <>
             <motion.div
-              initial={{ x: "-100%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: "-100%", opacity: 0 }}
-              transition={{
-                duration: 0.3,
-                ease: "easeInOut",
-              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setOpen(false)}
+              className="fixed inset-0 bg-black/50 z-40 md:hidden"
+            />
+            
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "tween", duration: 0.2 }}
               className={cn(
-                "fixed h-full w-full inset-0 bg-white dark:bg-neutral-900 p-10 z-[100] flex flex-col justify-between",
+                "fixed inset-y-0 left-0 w-[280px] bg-black p-6 z-50 md:hidden overflow-y-auto",
                 className
               )}
             >
-              <div
-                className="absolute right-10 top-10 z-50 text-neutral-800 dark:text-neutral-200"
-                onClick={() => setOpen(!open)}
-              >
-                <IconX />
+              <div className="flex flex-col h-full">
+                {children}
               </div>
-              {children}
             </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 };

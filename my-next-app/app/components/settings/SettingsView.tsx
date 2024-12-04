@@ -2,13 +2,38 @@
 
 import { IconBell, IconPalette, IconKey, IconLanguage, IconDeviceLaptop, IconBrain } from "@tabler/icons-react";
 import { useState } from "react";
+import { HexColorPicker } from "react-colorful";
 
 export function SettingsView() {
   const [notifications, setNotifications] = useState(true);
   const [theme, setTheme] = useState('dark');
   const [language, setLanguage] = useState('english');
   const [aiLevel, setAiLevel] = useState('advanced');
-  const [aiSuggestions] = useState(true);
+  const [aiSuggestions, setAiSuggestions] = useState(true);
+  const [primaryColor, setPrimaryColor] = useState("#0A0F1C");
+  const [middleColor, setMiddleColor] = useState("#1B2341");
+  const [secondaryColor, setSecondaryColor] = useState("#2D3867");
+
+  const updateThemeColors = () => {
+    document.documentElement.style.setProperty('--primary-color', primaryColor);
+    document.documentElement.style.setProperty('--middle-color', middleColor);
+    document.documentElement.style.setProperty('--secondary-color', secondaryColor);
+    
+    const sidebarGradients = document.querySelectorAll('.sidebar-gradient');
+    sidebarGradients.forEach(element => {
+      element.classList.remove('from-[#0A0F1C]', 'via-[#1B2341]', 'to-[#2D3867]');
+      element.classList.add(
+        `from-[${primaryColor}]`,
+        `via-[${middleColor}]`,
+        `to-[${secondaryColor}]`
+      );
+    });
+
+    const pageBackgrounds = document.querySelectorAll('.page-background');
+    pageBackgrounds.forEach(element => {
+      element.style.background = `linear-gradient(to bottom right, ${primaryColor}, ${middleColor}, ${secondaryColor})`;
+    });
+  };
 
   const settingsSections = [
     {
@@ -92,6 +117,24 @@ export function SettingsView() {
               <option value="system">System</option>
             </select>
           </div>
+          <div>
+            <label className="block text-sm text-white/60 mb-1">Primary Color (Top)</label>
+            <HexColorPicker color={primaryColor} onChange={setPrimaryColor} />
+          </div>
+          <div>
+            <label className="block text-sm text-white/60 mb-1">Middle Color</label>
+            <HexColorPicker color={middleColor} onChange={setMiddleColor} />
+          </div>
+          <div>
+            <label className="block text-sm text-white/60 mb-1">Secondary Color (Bottom)</label>
+            <HexColorPicker color={secondaryColor} onChange={setSecondaryColor} />
+          </div>
+          <button
+            onClick={updateThemeColors}
+            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg"
+          >
+            Apply Colors
+          </button>
         </div>
       ),
     },

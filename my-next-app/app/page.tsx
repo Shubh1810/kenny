@@ -32,10 +32,14 @@ import { MessagesView } from "@/app/components/chat/Messages";
 import { SettingsView } from "@/app/components/settings/SettingsView";
 import { TasksView } from "@/app/components/tasks/TasksView";
 import { SmartNotificationsView } from "./components/notifications/SmartNotificationsView";
+import Image from 'next/image';
 
 export default function Home() {
   const [open, setOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('dashboard');
+  const [primaryColor, setPrimaryColor] = useState('#0A0F1C');
+  const [middleColor, setMiddleColor] = useState('#1B2341');
+  const [secondaryColor, setSecondaryColor] = useState('#2D3867');
   
   const handleNavigation = (page: string) => {
     setCurrentPage(page);
@@ -319,71 +323,101 @@ export default function Home() {
     }
   };
 
+  const updateThemeColors = () => {
+    document.documentElement.style.setProperty('--primary-color', primaryColor);
+    document.documentElement.style.setProperty('--middle-color', middleColor);
+    document.documentElement.style.setProperty('--secondary-color', secondaryColor);
+
+    const pageGradients = document.querySelectorAll('.page-gradient');
+    pageGradients.forEach(element => {
+      element.classList.remove('from-[#0A0F1C]', 'via-[#1B2341]', 'to-[#2D3867]');
+      element.classList.add(
+        `from-[${primaryColor}]`,
+        `via-[${middleColor}]`,
+        `to-[${secondaryColor}]`
+      );
+    });
+  };
+
   return (
-    <div className="flex h-screen overflow-hidden bg-gradient-to-b from-[#1a0b2e] via-[#2f1a4e] to-[#421539]">
-      <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody>
-          <div className="flex flex-col h-full">
-            {/* Logo/Brand - Fixed at top */}
-            <div className="shrink-0 mb-6">
-              {open ? (
-                <h1 className="text-2xl font-bold text-neutral-100">
-                  Dashboard
-                </h1>
-              ) : (
-                <div className="w-10 h-10 bg-blue-500 rounded-xl" />
-              )}
-            </div>
-
-            {/* Navigation - Scrollable */}
-            <nav className="flex-1 overflow-y-auto pr-2 space-y-2">
-              <div className="flex flex-col">
-                {links.map((link) => (
-                  <SidebarLink 
-                    key={link.id} 
-                    link={{
-                      label: link.label,
-                      href: link.href,
-                      icon: link.icon
-                    }}
-                    onClick={link.onClick}
+    <>
+      {/* Add background div */}
+      <div className="fixed inset-0 page-background" style={{
+        background: `linear-gradient(to bottom right, #0A0F1C, #1B2341, #2D3867)`,
+        zIndex: -1
+      }} />
+      
+      <div className="flex h-screen overflow-hidden relative">
+        <Sidebar open={open} setOpen={setOpen}>
+          <SidebarBody>
+            <div className="flex flex-col h-full">
+              {/* Logo/Brand - Fixed at top */}
+              <div className="shrink-0 mb-6">
+                {open ? (
+                  <h1 className="text-2xl font-bold text-neutral-100">
+                    KIRA
+                  </h1>
+                ) : (
+                  <Image 
+                    src="/kira.jpg" 
+                    alt="KIRA Logo"
+                    width={40}
+                    height={40}
+                    className="rounded-xl"
                   />
-                ))}
+                )}
               </div>
-            </nav>
 
-            {/* Profile & Logout - Fixed at bottom */}
-            <div className="shrink-0 border-t border-white/10 pt-4 mt-4">
-              <SidebarLink
-                link={{
-                  label: "John Doe",
-                  href: "#",
-                  icon: (
-                    <div className="w-6 h-6 rounded-lg bg-neutral-300 dark:bg-neutral-700" />
-                  ),
-                }}
-                onClick={() => handleNavigation("profile")}
-              />
-              <SidebarLink
-                link={{
-                  label: "Logout",
-                  href: "#",
-                  icon: <IconLogout className="h-5 w-5 text-red-400" />,
-                }}
-                className="text-red-400"
-                onClick={() => {/* handle logout */}}
-              />
+              {/* Navigation - Scrollable */}
+              <nav className="flex-1 overflow-y-auto pr-2 space-y-2">
+                <div className="flex flex-col">
+                  {links.map((link) => (
+                    <SidebarLink 
+                      key={link.id} 
+                      link={{
+                        label: link.label,
+                        href: link.href,
+                        icon: link.icon
+                      }}
+                      onClick={link.onClick}
+                    />
+                  ))}
+                </div>
+              </nav>
+
+              {/* Profile & Logout - Fixed at bottom */}
+              <div className="shrink-0 border-t border-white/10 pt-4 mt-4">
+                <SidebarLink
+                  link={{
+                    label: "John Doe",
+                    href: "#",
+                    icon: (
+                      <div className="w-6 h-6 rounded-lg bg-neutral-300 dark:bg-neutral-700" />
+                    ),
+                  }}
+                  onClick={() => handleNavigation("profile")}
+                />
+                <SidebarLink
+                  link={{
+                    label: "Logout",
+                    href: "#",
+                    icon: <IconLogout className="h-5 w-5 text-red-400" />,
+                  }}
+                  className="text-red-400"
+                  onClick={() => {/* handle logout */}}
+                />
+              </div>
             </div>
-          </div>
-        </SidebarBody>
-      </Sidebar>
+          </SidebarBody>
+        </Sidebar>
 
-      {/* Main Content - Separately scrollable */}
-      <main className="flex-1 overflow-y-auto rounded-l-[2.5rem] bg-gradient-to-b from-[#1E1B2C] to-[#201D2E] p-8">
-        <div className="max-w-7xl mx-auto">
-          {renderContent()}
-        </div>
-      </main>
-    </div>
+        {/* Main Content */}
+        <main className="flex-1 overflow-y-auto rounded-l-[2.5rem] bg-gradient-to-br from-neutral-900/50 via-neutral-900/30 to-neutral-800/20 p-8 border-l border-white/5">
+          <div className="max-w-7xl mx-auto">
+            {renderContent()}
+          </div>
+        </main>
+      </div>
+    </>
   );
 }
