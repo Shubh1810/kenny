@@ -4,6 +4,12 @@ import { IconBell, IconPalette, IconLanguage, IconBrain } from "@tabler/icons-re
 import { useState } from "react";
 import { HexColorPicker } from "react-colorful";
 
+type ColorPreset = {
+  primary: string;
+  middle: string;
+  secondary: string;
+};
+
 export function SettingsView() {
   const [notifications, setNotifications] = useState(true);
   const [theme, setTheme] = useState('dark');
@@ -13,6 +19,25 @@ export function SettingsView() {
   const [primaryColor, setPrimaryColor] = useState("#0A0F1C");
   const [middleColor, setMiddleColor] = useState("#1B2341");
   const [secondaryColor, setSecondaryColor] = useState("#2D3867");
+
+  const [presets, setPresets] = useState<ColorPreset[]>([
+    { primary: "#0A0F1C", middle: "#1B2341", secondary: "#2D3867" },
+    { primary: "#FF5733", middle: "#33FF57", secondary: "#3357FF" },
+    { primary: "#FFD700", middle: "#FF4500", secondary: "#8A2BE2" },
+  ]);
+
+  const savePreset = (index: number) => {
+    const newPresets = [...presets];
+    newPresets[index] = { primary: primaryColor, middle: middleColor, secondary: secondaryColor };
+    setPresets(newPresets);
+  };
+
+  const loadPreset = (preset: ColorPreset) => {
+    setPrimaryColor(preset.primary);
+    setMiddleColor(preset.middle);
+    setSecondaryColor(preset.secondary);
+    updateThemeColors();
+  };
 
   const updateThemeColors = () => {
     document.documentElement.style.setProperty('--primary-color', primaryColor);
@@ -29,6 +54,13 @@ export function SettingsView() {
       );
     });
 
+    const pageBackground = document.querySelector('.page-background');
+    if (pageBackground) {
+      pageBackground.setAttribute(
+        'style',
+        `background: linear-gradient(to bottom right, ${primaryColor}, ${middleColor}, ${secondaryColor})`
+      );
+    }
   };
 
   const settingsSections = [
@@ -124,6 +156,28 @@ export function SettingsView() {
           <div>
             <label className="block text-sm text-white/60 mb-1">Secondary Color (Bottom)</label>
             <HexColorPicker color={secondaryColor} onChange={setSecondaryColor} />
+          </div>
+          <div className="mt-4 mb-4">
+            <label className="block text-sm text-white/60 mb-2">Saved Color Presets</label>
+            <div className="flex gap-4">
+              {presets.map((preset, index) => (
+                <div key={index} className="flex flex-col items-center">
+                  <button
+                    onClick={() => loadPreset(preset)}
+                    className="w-16 h-16 rounded-full border-2 border-white/20 hover:border-white/50 transition-all"
+                    style={{
+                      background: `linear-gradient(180deg, ${preset.primary} 0%, ${preset.middle} 50%, ${preset.secondary} 100%)`
+                    }}
+                  />
+                  <button
+                    onClick={() => savePreset(index)}
+                    className="mt-2 px-2 py-1 bg-blue-500 text-white rounded-lg text-xs hover:bg-blue-600 transition-colors"
+                  >
+                    Save Slot {index + 1}
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
           <button
             onClick={updateThemeColors}

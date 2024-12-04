@@ -32,6 +32,7 @@ import { SettingsView } from "@/app/components/settings/SettingsView";
 import { TasksView } from "@/app/components/tasks/TasksView";
 import { SmartNotificationsView } from "./components/notifications/SmartNotificationsView";
 import Image from 'next/image';
+import { WorkflowAutomationView } from "./components/workflow/WorkflowAutomationView";
 
 export default function Home() {
   const [open, setOpen] = useState(false);
@@ -144,7 +145,15 @@ export default function Home() {
       label: "Settings",
       id: "settings",
       href: "#",
-      icon: <IconSettings className="h-7 w-7 text-neutral-100" />,
+      icon: (
+        <Image 
+          src="/settings.png" 
+          alt="Settings"
+          width={28}
+          height={28}
+          className="rounded-sm"
+        />
+      ),
       onClick: () => handleNavigation("settings"),
     },
   ];
@@ -190,23 +199,7 @@ export default function Home() {
       case "researchAssistant":
         return <ResearchAssistantView />;
       case "workflowAutomation":
-        return (
-          <div>
-            <h1 className="text-2xl font-bold text-white/90 mb-6">
-              Workflow Automation
-            </h1>
-            <p className="text-white/70 mb-4">
-              Automate tasks and streamline your workflow.
-            </p>
-            {/* Workflow Builder Placeholder */}
-            <div className="bg-white/5 p-4 rounded-xl border border-white/10">
-              <p className="text-white/70">
-                Drag and drop tasks to build your workflow (feature coming
-                soon).
-              </p>
-            </div>
-          </div>
-        );
+        return <WorkflowAutomationView />;
       case "dataVisualization":
         return <DataVisualizationView />;
 
@@ -334,7 +327,7 @@ export default function Home() {
               {/* Logo/Brand - Fixed at top */}
               <div className="shrink-0 mb-6">
                 {open ? (
-                  <h1 className="text-2xl font-bold text-neutral-100">
+                  <h1 className="text-2xl font-bold text-neutral-100 sidebar-text">
                     KIRA
                   </h1>
                 ) : (
@@ -360,6 +353,7 @@ export default function Home() {
                         icon: link.icon
                       }}
                       onClick={link.onClick}
+                      className="sidebar-text"
                     />
                   ))}
                 </div>
@@ -382,6 +376,7 @@ export default function Home() {
                   ),
                   }}
                   onClick={() => handleNavigation("profile")}
+                  className="sidebar-text"
                 />
                 <SidebarLink
                   link={{
@@ -389,7 +384,7 @@ export default function Home() {
                     href: "#",
                     icon: <IconLogout className="h-5 w-5 text-red-400" />,
                   }}
-                  className="text-red-400"
+                  className="text-red-400 sidebar-text"
                   onClick={() => {/* handle logout */}}
                 />
               </div>
