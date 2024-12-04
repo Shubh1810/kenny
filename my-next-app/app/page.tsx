@@ -18,7 +18,7 @@ import {
   IconUsers,
   IconGitBranch,
 } from "@tabler/icons-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DashboardView } from "@/app/components/dashboard/DashboardView";
 import { CodeAssistantView } from "@/app/components/code-assistant/CodeAssistantView";
 import { DataVisualizationView } from "@/app/components/data/DataVisualizationView";
@@ -32,10 +32,22 @@ import { TasksView } from "@/app/components/tasks/TasksView";
 import { SmartNotificationsView } from "./components/notifications/SmartNotificationsView";
 import Image from 'next/image';
 import { WorkflowAutomationView } from "./components/workflow/WorkflowAutomationView";
-
+import { MultiAgentControlPanel } from "./components/MultiAgentControlPanel";
 export default function Home() {
   const [open, setOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('dashboard');
+  
+  useEffect(() => {
+    const handleNavigationRequest = (event: CustomEvent) => {
+      handleNavigation(event.detail);
+    };
+
+    window.addEventListener('navigationRequest', handleNavigationRequest as EventListener);
+    
+    return () => {
+      window.removeEventListener('navigationRequest', handleNavigationRequest as EventListener);
+    };
+  }, []);
   
   const handleNavigation = (page: string) => {
     setCurrentPage(page);
@@ -85,11 +97,25 @@ export default function Home() {
       onClick: () => handleNavigation("dataVisualization"),
     },
     {
+      label: "Chat",
+      id: "messages",
+      href: "#",
+      icon: <IconMessages className="h-7 w-7 text-neutral-100" />,
+      onClick: () => handleNavigation("messages"),
+    },
+    {
       label: "Smart Notifications",
       id: "smartNotifications",
       href: "#",
       icon: <IconBell className="h-7 w-7 text-neutral-100" />,
       onClick: () => handleNavigation("smartNotifications"),
+    },
+    {
+      label: "Multi-Agent Control Panel",
+      id: "multiAgentControlPanel",
+      href: "#",
+      icon: <IconBrain className="h-7 w-7 text-neutral-100" />,
+      onClick: () => handleNavigation("multiAgentControlPanel"),
     },
     {
       label: "Learning Hub",
@@ -111,13 +137,6 @@ export default function Home() {
       href: "#",
       icon: <IconGitBranch className="h-7 w-7 text-neutral-100" />,
       onClick: () => handleNavigation("versionControl"),
-    },
-    {
-      label: "Chat",
-      id: "messages",
-      href: "#",
-      icon: <IconMessages className="h-7 w-7 text-neutral-100" />,
-      onClick: () => handleNavigation("messages"),
     },
     {
       label: "Knowledge Base",
@@ -201,7 +220,8 @@ export default function Home() {
         return <WorkflowAutomationView />;
       case "dataVisualization":
         return <DataVisualizationView />;
-
+      case "multiAgentControlPanel":
+        return <MultiAgentControlPanel />;
       case "smartNotifications":
         return <SmartNotificationsView />;
       case "learningHub":
@@ -313,7 +333,6 @@ export default function Home() {
 
   return (
     <>
-      {/* Add background div */}
       <div className="fixed inset-0 page-background" style={{
         background: `linear-gradient(to bottom right, #0A0F1C, #1B2341, #2D3867)`,
         zIndex: -1
@@ -326,7 +345,11 @@ export default function Home() {
               {/* Logo/Brand - Fixed at top */}
               <div className="shrink-0 mb-6">
                 {open ? (
-                  <h1 className="text-2xl font-bold text-neutral-100 sidebar-text">
+                  <h1 
+                    className="text-2xl font-bold text-neutral-100 sidebar-text cursor-pointer"
+                    onClick={() => handleNavigation("dashboard")}
+                    onTouchEnd={() => handleNavigation("dashboard")}
+                  >
                     KIRA
                   </h1>
                 ) : (
@@ -335,7 +358,9 @@ export default function Home() {
                     alt="KIRA Logo"
                     width={40}
                     height={40}
-                    className="rounded-xl"
+                    className="rounded-xl cursor-pointer"
+                    onClick={() => handleNavigation("dashboard")}
+                    onTouchEnd={() => handleNavigation("dashboard")}
                   />
                 )}
               </div>
@@ -362,15 +387,15 @@ export default function Home() {
               <div className="shrink-0 border-t border-white/10 pt-4 mt-4">
                 <SidebarLink
                   link={{
-                    label: "John Doe",
+                    label: "Malga Podi",
                     href: "#",
                     icon: (
                       <Image 
                       src="/unknown-user.jpg" 
                       alt="Unknown User"
-                      width={20}
-                      height={20}
-                      className="rounded-md"
+                      width={27}
+                      height={27}
+                      className="rounded-lg"
                     />
                   ),
                   }}
@@ -391,8 +416,8 @@ export default function Home() {
           </SidebarBody>
         </Sidebar>
 
-        {/* Main Content */}
-        <main className="flex-1 overflow-y-auto rounded-l-[2.5rem] bg-gradient-to-br from-neutral-900/50 via-neutral-900/30 to-neutral-800/20 p-8 border-l border-white/5">
+        {/* Updated to apply rounded corners only on larger screens */}
+        <main className="flex-1 overflow-y-auto bg-gradient-to-br from-neutral-900/50 via-neutral-900/30 to-neutral-800/20 p-4 sm:p-8 border-l border-white/5 mt-16 sm:mt-0 sm:rounded-l-[2.5rem]">
           <div className="max-w-7xl mx-auto">
             {renderContent()}
           </div>

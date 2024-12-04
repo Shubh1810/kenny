@@ -90,7 +90,7 @@ export const DesktopSidebar = ({
     <>
       <motion.div
         className={cn(
-          "h-screen px-4 py-6 hidden md:flex md:flex-col sidebar-gradient bg-gradient-to-b from-[#0A0F1C] via-[#1B2341] to-[#2D3867] flex-shrink-0 shadow-xl overflow-x-hidden",
+          "h-screen px-4 py-6 hidden md:flex md:flex-col sidebar-gradient bg-gradient-to-b from-[#000238] via-[#1c0018] to-[#140405] flex-shrink-0 shadow-xl overflow-x-hidden",
           className
         )}
         animate={{
@@ -116,16 +116,28 @@ export const MobileSidebar = ({
   ...props
 }: React.ComponentProps<"div">) => {
   const { open, setOpen } = useSidebar();
+  
+  const handleNavigation = (page: string) => {
+    window.dispatchEvent(new CustomEvent('navigationRequest', { detail: page }));
+    setOpen(false);
+  };
+
   return (
     <>
       <div
         className={cn(
-          "h-16 px-4 flex flex-row md:hidden items-center justify-between bg-black w-full fixed top-0 z-30 overflow-x-hidden",
+          "h-16 px-4 flex flex-row md:hidden items-center justify-between w-full fixed top-0 z-30 overflow-x-hidden",
+          "bg-black/20 backdrop-blur-lg",
+          "border-b border-white/10",
           className
         )}
         {...props}
       >
-        <div className="flex items-center gap-2">
+        <div 
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={() => handleNavigation('dashboard')}
+          onTouchEnd={() => handleNavigation('dashboard')}
+        >
           <Image 
             src="/kira.jpg" 
             alt="KIRA Logo"
@@ -152,7 +164,7 @@ export const MobileSidebar = ({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setOpen(false)}
-              className="fixed inset-0 bg-black/50 z-40 md:hidden"
+              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 md:hidden"
             />
             
             <motion.div
@@ -161,7 +173,9 @@ export const MobileSidebar = ({
               exit={{ x: "-100%" }}
               transition={{ type: "tween", duration: 0.2 }}
               className={cn(
-                "fixed inset-y-0 left-0 w-[280px] bg-black p-6 z-50 md:hidden overflow-y-auto overflow-x-hidden",
+                "fixed inset-y-0 left-0 w-[280px] p-6 z-50 md:hidden overflow-y-auto overflow-x-hidden",
+                "bg-black/20 backdrop-blur-lg",
+                "border-b border-white/10",
                 className
               )}
             >

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@/styles/globals.css";
+import { Sidebar } from "./components/ui/Sidebar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,10 +26,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className="bg-gradient-to-bl from-[#000238] via-[#000238] via-[#1c0018] to-[#140405] min-h-screen">
+        <Sidebar>
+          {children}
+        </Sidebar>
       </body>
     </html>
   );

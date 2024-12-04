@@ -3,6 +3,7 @@
 import { IconBell, IconPalette, IconLanguage, IconBrain } from "@tabler/icons-react";
 import { useState } from "react";
 import { HexColorPicker } from "react-colorful";
+import { motion } from "framer-motion";
 
 type ColorPreset = {
   primary: string;
@@ -145,18 +146,74 @@ export function SettingsView() {
               <option value="system">System</option>
             </select>
           </div>
-          <div>
-            <label className="block text-sm text-white/60 mb-1">Primary Color (Top)</label>
-            <HexColorPicker color={primaryColor} onChange={setPrimaryColor} />
+          
+          {/* Color Selection Grid */}
+          <div className="grid grid-cols-3 gap-6">
+            <div>
+              <label className="block text-sm text-white/60 mb-1">Primary Color (Top)</label>
+              <div className="flex gap-4">
+                <HexColorPicker color={primaryColor} onChange={setPrimaryColor} />
+                <motion.div 
+                  className="w-full p-4 rounded-lg bg-white/5 border border-white/10"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  <p className="text-sm text-white/60 mb-2">Selected Color:</p>
+                  <div className="flex items-center gap-2">
+                    <div 
+                      className="w-6 h-6 rounded-full border border-white/20"
+                      style={{ backgroundColor: primaryColor }}
+                    />
+                    <code className="text-sm text-white/90">{primaryColor}</code>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm text-white/60 mb-1">Middle Color</label>
+              <div className="flex gap-4">
+                <HexColorPicker color={middleColor} onChange={setMiddleColor} />
+                <motion.div 
+                  className="w-full p-4 rounded-lg bg-white/5 border border-white/10"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  <p className="text-sm text-white/60 mb-2">Selected Color:</p>
+                  <div className="flex items-center gap-2">
+                    <div 
+                      className="w-6 h-6 rounded-full border border-white/20"
+                      style={{ backgroundColor: middleColor }}
+                    />
+                    <code className="text-sm text-white/90">{middleColor}</code>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm text-white/60 mb-1">Secondary Color (Bottom)</label>
+              <div className="flex gap-4">
+                <HexColorPicker color={secondaryColor} onChange={setSecondaryColor} />
+                <motion.div 
+                  className="w-full p-4 rounded-lg bg-white/5 border border-white/10"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  <p className="text-sm text-white/60 mb-2">Selected Color:</p>
+                  <div className="flex items-center gap-2">
+                    <div 
+                      className="w-6 h-6 rounded-full border border-white/20"
+                      style={{ backgroundColor: secondaryColor }}
+                    />
+                    <code className="text-sm text-white/90">{secondaryColor}</code>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
           </div>
-          <div>
-            <label className="block text-sm text-white/60 mb-1">Middle Color</label>
-            <HexColorPicker color={middleColor} onChange={setMiddleColor} />
-          </div>
-          <div>
-            <label className="block text-sm text-white/60 mb-1">Secondary Color (Bottom)</label>
-            <HexColorPicker color={secondaryColor} onChange={setSecondaryColor} />
-          </div>
+
+          {/* Color Presets */}
           <div className="mt-4 mb-4">
             <label className="block text-sm text-white/60 mb-2">Saved Color Presets</label>
             <div className="flex gap-4">
@@ -179,12 +236,15 @@ export function SettingsView() {
               ))}
             </div>
           </div>
-          <button
+
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={updateThemeColors}
-            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg"
+            className="w-full mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
           >
             Apply Colors
-          </button>
+          </motion.button>
         </div>
       ),
     },

@@ -54,6 +54,7 @@ body {
   position: relative;
   overflow-x: clip;
   max-width: 100vw;
+  background-color: #000238;
 }
 
 a {
