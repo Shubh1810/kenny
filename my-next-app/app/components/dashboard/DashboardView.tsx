@@ -8,7 +8,7 @@ export function DashboardView() {
   const [systemStatus, setSystemStatus] = useState(50); // Default value
   const [aiActivity, setAiActivity] = useState(50); // Default value
   const [time, setTime] = useState(new Date());
-  const [bankBalance, setBankBalance] = useState(123456.78); // Example balance
+  const [bankBalance] = useState(123456.78); // Example balance
   const [heights, setHeights] = useState<number[]>(Array(30).fill(50)); // Default value
 
   useEffect(() => {

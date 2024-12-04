@@ -13,7 +13,7 @@ interface Agent {
 
 export function MultiAgentControlPanel() {
   const [activeTab, setActiveTab] = useState('agents');
-  const [agents, setAgents] = useState<Agent[]>([
+  const [agents] = useState<Agent[]>([
     { id: '1', name: 'Code Generator', status: 'idle', type: 'Generator' },
     { id: '2', name: 'Test Runner', status: 'running', type: 'Testing' },
     { id: '3', name: 'Documentation Bot', status: 'stopped', type: 'Documentation' },
@@ -134,7 +134,7 @@ export function MultiAgentControlPanel() {
           {activeTab === 'logs' && (
             <div className="space-y-4">
               <div className="bg-gray-900 p-4 rounded-lg font-mono text-sm text-green-400">
-                <p>[System] Agent "Code Generator" initialized</p>
+                <p>[System] Agent &quot;Code Generator&quot; initialized</p>
                 <p>[Task] Starting code generation for component...</p>
                 <p>[Warning] Resource usage at 75%</p>
               </div>
