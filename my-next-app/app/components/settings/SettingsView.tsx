@@ -29,10 +29,6 @@ export function SettingsView() {
       );
     });
 
-    const pageBackgrounds = document.querySelectorAll('.page-background');
-    pageBackgrounds.forEach(element => {
-      element.style.background = `linear-gradient(to bottom right, ${primaryColor}, ${middleColor}, ${secondaryColor})`;
-    });
   };
 
   const settingsSections = [
