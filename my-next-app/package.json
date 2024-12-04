@@ -1,5 +1,5 @@
 {
-  "name": "kenny",
+  "name": "my-next-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate",
     "vercel-build": "next build"
   },
   "dependencies": {
@@ -16,6 +15,7 @@
     "framer-motion": "^11.13.1",
     "next": "15.0.3",
     "react": "^18.2.0",
+    "react-colorful": "^5.6.1",
     "react-dom": "^18.2.0",
     "tailwind-merge": "^2.5.5"
   },
