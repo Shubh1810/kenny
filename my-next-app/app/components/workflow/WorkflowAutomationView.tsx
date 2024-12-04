@@ -21,7 +21,7 @@ type WorkflowStep = {
   id: string;
   type: string;
   name: string;
-  config: Record<string, any>;
+  config: Record<string, unknown>;
   status: "pending" | "running" | "completed" | "error";
 };
 
@@ -50,7 +50,7 @@ export function WorkflowAutomationView() {
 
   const runWorkflow = async () => {
     setIsRunning(true);
-    for (let step of workflows) {
+    for (const step of workflows) {
       const updatedWorkflows = [...workflows];
       const stepIndex = updatedWorkflows.findIndex((s) => s.id === step.id);
       updatedWorkflows[stepIndex].status = "running";

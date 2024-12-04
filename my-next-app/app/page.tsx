@@ -3,7 +3,6 @@
 import { Sidebar, SidebarBody, SidebarLink } from "@/app/components/ui/Sidebar";
 import {
   IconHome,
-  IconSettings,
   IconLogout,
   IconMessages,
   IconBrain,

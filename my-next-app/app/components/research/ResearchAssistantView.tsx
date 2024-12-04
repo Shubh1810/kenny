@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { IconSearch, IconBookmark, IconShare, IconLoader, IconFilter, IconArrowRight } from "@tabler/icons-react";
+import { IconSearch, IconBookmark, IconShare, IconLoader, IconFilter } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { cn } from "../../lib/utils";
 
@@ -9,7 +9,6 @@ export function ResearchAssistantView() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [results, setResults] = useState<string[]>([]);
-  const [filters, setFilters] = useState<string[]>([]);
 
   const handleSearch = () => {
     setIsSearching(true);
@@ -22,12 +21,6 @@ export function ResearchAssistantView() {
       ]);
       setIsSearching(false);
     }, 1500);
-  };
-
-  const toggleFilter = (filter: string) => {
-    setFilters((prev) =>
-      prev.includes(filter) ? prev.filter((f) => f !== filter) : [...prev, filter]
-    );
   };
 
   return (
