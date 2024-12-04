@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "install-requirements": "pip install -r requirements.txt"
   },
   "dependencies": {
     "@tabler/icons-react": "^3.24.0",
