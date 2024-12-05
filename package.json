@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "workspaces": ["my-next-app"],
+  "scripts": {
+    "build": "npm run build --workspace=my-next-app",
+    "dev": "npm run dev --workspace=my-next-app"
+  }
+}

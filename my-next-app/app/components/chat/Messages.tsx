@@ -17,6 +17,15 @@ export function MessagesView() {
       unread: true,
       online: true
     },
+    {
+      id: '2',
+      name: 'Yash Sheth',
+      avatar: '👩‍💼',
+      lastMessage: 'Hey, can we discuss the new project?',
+      time: '10:30 AM',
+      unread: true,
+      online: true
+    },
     { 
       id: '2',
       name: 'Param Khanna',

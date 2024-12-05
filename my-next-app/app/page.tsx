@@ -8,8 +8,6 @@ import {
   IconBrain,
   IconCheckbox,
   IconCalendar,
-  IconCode,
-  IconFolders,
   IconBooks,
   IconAutomation,
   IconChartPie,
@@ -19,7 +17,7 @@ import {
   IconGitBranch,
 } from "@tabler/icons-react";
 import { useState, useEffect } from "react";
-import { DashboardView } from "@/app/components/dashboard/DashboardView";
+import DashboardView from "@/app/components/dashboard/DashboardView";
 import { CodeAssistantView } from "@/app/components/code-assistant/CodeAssistantView";
 import { DataVisualizationView } from "@/app/components/data/DataVisualizationView";
 import { ProfileView } from "@/app/components/profile/ProfileView";
@@ -33,9 +31,15 @@ import { SmartNotificationsView } from "./components/notifications/SmartNotifica
 import Image from 'next/image';
 import { WorkflowAutomationView } from "./components/workflow/WorkflowAutomationView";
 import { MultiAgentControlPanel } from "./components/MultiAgentControlPanel";
+import CodeEvolutionView from "./components/CodeEvolutionView";
+import ThoughtPartnerView from "./components/ThoughtPartner";
+import { useAuth } from './context/AuthContext';
+import { ProtectedRoute } from './components/ProtectedRoute';
+
 export default function Home() {
   const [open, setOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('dashboard');
+  const { logout } = useAuth();
   
   useEffect(() => {
     const handleNavigationRequest = (event: CustomEvent) => {
@@ -53,6 +57,8 @@ export default function Home() {
     setCurrentPage(page);
   };
   
+
+
   const links = [
     {
       label: "Dashboard",
@@ -65,15 +71,15 @@ export default function Home() {
       label: "AI Code Assistant",
       id: "codeAssistant",
       href: "#",
-      icon: <IconCode className="h-7 w-7 text-neutral-100" />,
+      icon: <IconAutomation className="h-7 w-7 text-neutral-100" />,
       onClick: () => handleNavigation("codeAssistant"),
     },
     {
-      label: "Project Explorer",
-      id: "projectExplorer",
+      label: "Code Evolution",
+      id: "codeEvolution",
       href: "#",
-      icon: <IconFolders className="h-7 w-7 text-neutral-100" />,
-      onClick: () => handleNavigation("projectExplorer"),
+      icon: <span className="h-7 w-7 text-neutral-100 flex justify-center items-center text-2xl">💻</span>,
+      onClick: () => handleNavigation("codeEvolution"),
     },
     {
       label: "Research Assistant",
@@ -174,6 +180,37 @@ export default function Home() {
       ),
       onClick: () => handleNavigation("settings"),
     },
+    {
+      label: "Thought Partner",
+      id: "thoughtPartner",
+      href: "#",
+      icon: <IconBrain className="h-7 w-7 text-neutral-100" />,
+      onClick: () => handleNavigation("thoughtPartner"),
+    },
+    {
+      label: "Time Dilation Manipulation",
+      id: "timeDilation",
+      href: "#",
+      icon: <span className="h-7 w-7 text-neutral-100 flex justify-center items-center text-2xl">⏳</span>,
+      onClick: () => handleNavigation("timeDilation"),
+    },
+    {
+      label: "Quantum Simulator",
+      id: "quantumSimulator",
+      href: "#",
+      icon: <span className="h-7 w-7 text-neutral-100 flex justify-center items-center text-2xl">🔬</span>,
+      onClick: () => handleNavigation("quantumSimulator"),
+    },
+    {
+      label: "Logout",
+      id: "logout",
+      href: "#",
+      icon: <IconLogout className="h-5 w-5 text-red-400" />,
+      onClick: () => {
+        logout();
+        handleNavigation("dashboard");
+      },
+    },
   ];
   const renderContent = () => {
     switch(currentPage) {
@@ -181,6 +218,8 @@ export default function Home() {
         return <DashboardView />;
       case 'codeAssistant':
         return <CodeAssistantView />;
+      case "codeEvolution":
+        return <CodeEvolutionView />;
       case "projectExplorer":
         return (
           <div>
@@ -325,16 +364,17 @@ export default function Home() {
         return <KnowledgeBaseView />;
         case "profile":
           return <ProfileView />;
-
+      case "thoughtPartner":
+        return <ThoughtPartnerView />;
       default:
         return null;
     }
   };
 
   return (
-    <>
+    <ProtectedRoute>
       <div className="fixed inset-0 page-background" style={{
-        background: `linear-gradient(to bottom right, #0A0F1C, #1B2341, #2D3867)`,
+        background: `linear-gradient(to bottom , #000238, #000238, #1c0018, #140405)`,
         zIndex: -1
       }} />
       
@@ -366,7 +406,7 @@ export default function Home() {
               </div>
 
               {/* Navigation - Scrollable */}
-              <nav className="flex-1 overflow-y-auto pr-2 space-y-2">
+              <nav className="flex-1 overflow-y-auto pr-2 space-y-2 scrollbar-hide">
                 <div className="flex flex-col">
                   {links.map((link) => (
                     <SidebarLink 
@@ -409,7 +449,10 @@ export default function Home() {
                     icon: <IconLogout className="h-5 w-5 text-red-400" />,
                   }}
                   className="text-red-400 sidebar-text"
-                  onClick={() => {/* handle logout */}}
+                  onClick={() => {
+                    logout();
+                    handleNavigation("dashboard");
+                  }}
                 />
               </div>
             </div>
@@ -417,12 +460,12 @@ export default function Home() {
         </Sidebar>
 
         {/* Updated to apply rounded corners only on larger screens */}
-        <main className="flex-1 overflow-y-auto bg-gradient-to-br from-neutral-900/50 via-neutral-900/30 to-neutral-800/20 p-4 sm:p-8 border-l border-white/5 mt-16 sm:mt-0 sm:rounded-l-[2.5rem]">
+        <main className="flex-1 overflow-y-auto bg-gradient-to-br from-neutral-950/80 via-neutral-950/70 to-neutral-900/60 p-4 sm:p-8 border-l border-white/5 mt-16 sm:mt-0 sm:rounded-l-[2.5rem]">
           <div className="max-w-7xl mx-auto">
             {renderContent()}
           </div>
         </main>
       </div>
-    </>
+    </ProtectedRoute>
   );
 }
