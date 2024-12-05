@@ -1,8 +1,9 @@
 "use client";
 
+import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useState, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import { cn } from "../lib/utils";
@@ -18,35 +19,24 @@ function LoginForm() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const searchParams = useSearchParams();
-  const justRegistered = searchParams.get('registered');
+
+  useEffect(() => {
+    // Redirect if user is already logged in
+    if (user) {
+      router.push('/');
+    }
+  }, [user, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
+    
     try {
-      console.log('Attempting login with:', { username, password });
-      const result = await login(username, password);
-      console.log('Login successful:', result);
-      
-      console.log('Current user state:', user);
-
-      // Check if token is stored
-      const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error('Token not found after login');
-      }
-      console.log('Token stored:', token);
-
-      router.push('/');
-    } catch (err: unknown) {
-      console.error('Login error details:', err);
-      if (err instanceof Error) {
-        setError(err.message || 'Login failed. Please check your credentials.');
-      } else {
-        setError('An unexpected error occurred during login.');
-      }
+      await login(username, password);
+      // Login function will handle navigation
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Login failed');
     } finally {
       setIsLoading(false);
     }
@@ -55,11 +45,6 @@ function LoginForm() {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-neutral-950/80 via-neutral-950/70 to-neutral-900/60">
       <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
-        {justRegistered && (
-          <div className="my-4 p-3 text-sm text-green-400 bg-green-900/20 rounded border border-green-500/20">
-            Account created successfully! Please log in.
-          </div>
-        )}
         <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
           Welcome back to KIRA
         </h2>
@@ -166,16 +151,39 @@ const LabelInputContainer = ({
   );
 };
 
+// Wrap the page component with error boundary
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: any) {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-neutral-950/80 via-neutral-950/70 to-neutral-900/60">
+          <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
+            <h2>Something went wrong. Please try again later.</h2>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 export default function LoginPage() {
   return (
-    <Suspense fallback={
-      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-neutral-950/80 via-neutral-950/70 to-neutral-900/60">
-        <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
-          Loading...
-        </div>
-      </div>
-    }>
+    <ErrorBoundary>
       <LoginForm />
-    </Suspense>
+    </ErrorBoundary>
   );
 }
