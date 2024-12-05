@@ -17,26 +17,26 @@ function LoginForm() {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Redirect if user is already logged in
     if (user) {
       router.push('/');
     }
   }, [user, router]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError('');
+    setError(null);
     setIsLoading(true);
     
     try {
       await login(username, password);
-      // Login function will handle navigation
-    } catch (error) {
-      setError(error instanceof Error ? error.message : 'Login failed');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Login failed';
+      setError(errorMessage);
+      console.error('Login error:', errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -151,18 +151,23 @@ const LabelInputContainer = ({
   );
 };
 
-// Wrap the page component with error boundary
 class ErrorBoundary extends React.Component<
   { children: React.ReactNode },
-  { hasError: boolean }
+  { hasError: boolean; errorMessage: string }
 > {
   constructor(props: { children: React.ReactNode }) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { 
+      hasError: false,
+      errorMessage: ''
+    };
   }
 
-  static getDerivedStateFromError(error: any) {
-    return { hasError: true };
+  static getDerivedStateFromError(err: Error) {
+    return { 
+      hasError: true,
+      errorMessage: err.message || 'Something went wrong'
+    };
   }
 
   render() {
@@ -170,7 +175,7 @@ class ErrorBoundary extends React.Component<
       return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-neutral-950/80 via-neutral-950/70 to-neutral-900/60">
           <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
-            <h2>Something went wrong. Please try again later.</h2>
+            <h2>Error: {this.state.errorMessage}</h2>
           </div>
         </div>
       );
