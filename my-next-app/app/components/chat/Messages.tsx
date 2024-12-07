@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Search, Send } from "lucide-react";
+import type { LucideProps } from 'lucide-react';
 
 interface ChatType {
   id: string;
@@ -50,7 +51,7 @@ export function MessagesView() {
               className="w-full bg-white/5 text-white pl-10 pr-4 py-2 rounded-lg border border-white/10 focus:outline-none focus:border-white/20"
             />
             <div className="absolute left-3 top-2.5 text-white/40">
-              <Search className="w-5 h-5" />
+              <Search size={20} className="text-white/40" />
             </div>
           </div>
         </div>
