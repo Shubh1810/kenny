@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { IconBrandGithub, IconCode, IconBrain } from "@tabler/icons-react";
 import { cn } from "../../lib/utils";
-import { Icon } from "../shared/Icon";
 
 export function CodeAssistantView() {
   const [code, setCode] = useState("");
@@ -50,9 +48,8 @@ export function CodeAssistantView() {
               Get intelligent suggestions and improvements for your code
             </p>
           </div>
-          <button className="flex items-center gap-2">
-            <IconBrandGithub className="w-5 h-5" />
-            <span>Connect GitHub</span>
+          <button className="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg transition-colors">
+            Connect GitHub
           </button>
         </div>
 
@@ -100,7 +97,7 @@ export function CodeAssistantView() {
                   {loading ? (
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   ) : (
-                    <Icon icon={IconBrain} className="w-5 h-5" />
+                    <div className="w-5 h-5 bg-blue-500 rounded-full" />
                   )}
                   <span>Analyze</span>
                 </button>
@@ -111,7 +108,7 @@ export function CodeAssistantView() {
           {/* Suggestions Panel */}
           <div className="bg-white/5 border border-white/10 rounded-xl p-6">
             <div className="flex items-center gap-2 mb-6">
-              <Icon icon={IconCode} className="w-6 h-6 text-blue-400" />
+              <div className="w-6 h-6 bg-blue-500 rounded-full" />
               <h2 className="text-xl font-semibold text-white/90">
                 Code Suggestions
               </h2>
@@ -129,7 +126,7 @@ export function CodeAssistantView() {
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center h-[300px] text-white/50">
-                <Icon icon={IconBrain} className="w-12 h-12 mb-4" />
+                <div className="w-12 h-12 bg-blue-500 rounded-full mb-4" />
                 <p>Submit your code to get AI-powered suggestions</p>
               </div>
             )}
