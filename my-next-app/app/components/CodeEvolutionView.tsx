@@ -4,7 +4,13 @@
 
 import React, { useState, useCallback } from "react";
 import { useEffect } from "react";
-import MonacoEditor from "@monaco-editor/react";
+import dynamic from 'next/dynamic';
+
+// Dynamically import MonacoEditor with no SSR
+const MonacoEditor = dynamic(
+  () => import('@monaco-editor/react'),
+  { ssr: false }
+);
 
 const CodeEvolutionView = () => {
   const [code, setCode] = useState(`// Start typing your code here...\n`);
@@ -40,14 +46,10 @@ const CodeEvolutionView = () => {
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
       fetchSuggestions(code);
-    }, 1000); // Debounce for 1 second
+    }, 1000);
 
     return () => clearTimeout(debounceTimer);
   }, [code, fetchSuggestions]);
-
-  const handleEditorChange = (value: string | undefined) => {
-    setCode(value || "");
-  };
 
   return (
     <div className="p-6 bg-gray-900 text-white rounded-xl">
@@ -57,12 +59,13 @@ const CodeEvolutionView = () => {
         suggestions.
       </p>
 
+      {/* @ts-ignore -- MonacoEditor types issue */}
       <MonacoEditor
         height="300px"
         defaultLanguage="javascript"
         value={code}
         theme="vs-dark"
-        onChange={handleEditorChange}
+        onChange={(value: string | undefined) => setCode(value || "")}
         options={{
           minimap: { enabled: false },
           fontSize: 14,
