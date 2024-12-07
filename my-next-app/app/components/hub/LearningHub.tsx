@@ -2,6 +2,7 @@
 
 import { IconBook, IconCertificate, IconProgress, IconBookmark, IconClock } from "@tabler/icons-react";
 import { useState } from "react";
+import { Icon } from "../shared/Icon";
 
 export function LearningHubView() {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -53,7 +54,7 @@ export function LearningHubView() {
         <div className="bg-white/5 p-4 rounded-xl border border-white/10">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-blue-500/10 rounded-lg">
-              <IconBook className="h-5 w-5 text-blue-400" />
+              <Icon icon={IconBook} className="h-5 w-5 text-blue-400" />
             </div>
             <div>
               <p className="text-sm text-white/60">Courses Started</p>
@@ -64,7 +65,7 @@ export function LearningHubView() {
         <div className="bg-white/5 p-4 rounded-xl border border-white/10">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-green-500/10 rounded-lg">
-              <IconCertificate className="h-5 w-5 text-green-400" />
+              <Icon icon={IconCertificate} className="h-5 w-5 text-green-400" />
             </div>
             <div>
               <p className="text-sm text-white/60">Certificates</p>
@@ -75,7 +76,7 @@ export function LearningHubView() {
         <div className="bg-white/5 p-4 rounded-xl border border-white/10">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-purple-500/10 rounded-lg">
-              <IconClock className="h-5 w-5 text-purple-400" />
+              <Icon icon={IconClock} className="h-5 w-5 text-purple-400" />
             </div>
             <div>
               <p className="text-sm text-white/60">Hours Learned</p>
@@ -86,7 +87,7 @@ export function LearningHubView() {
         <div className="bg-white/5 p-4 rounded-xl border border-white/10">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-yellow-500/10 rounded-lg">
-              <IconProgress className="h-5 w-5 text-yellow-400" />
+              <Icon icon={IconProgress} className="h-5 w-5 text-yellow-400" />
             </div>
             <div>
               <p className="text-sm text-white/60">Current Streak</p>
@@ -122,11 +123,11 @@ export function LearningHubView() {
               <div className="p-6">
                 <div className="flex justify-between items-start mb-4">
                   <span className="text-4xl">{course.thumbnail}</span>
-                  <IconBookmark className="h-5 w-5 text-white/40 hover:text-white/60 cursor-pointer" />
+                  <Icon icon={IconBookmark} className="h-5 w-5 text-white/40 hover:text-white/60 cursor-pointer" />
                 </div>
                 <h3 className="text-lg font-semibold text-white/90 mb-2">{course.title}</h3>
                 <div className="flex items-center gap-2 text-sm text-white/60 mb-4">
-                  <IconClock className="h-4 w-4" />
+                  <Icon icon={IconClock} className="h-4 w-4" />
                   <span>{course.duration}</span>
                   <span className="px-2 py-1 rounded-full bg-white/10 text-white/60">
                     {course.level}

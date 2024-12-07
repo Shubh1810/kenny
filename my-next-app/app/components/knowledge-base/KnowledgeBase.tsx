@@ -2,6 +2,7 @@
 
 import { IconSearch, IconBookmark, IconArrowRight, IconTag } from "@tabler/icons-react";
 import { useState } from "react";
+import { Icon } from "../shared/Icon";
 
 export function KnowledgeBaseView() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -56,7 +57,7 @@ export function KnowledgeBaseView() {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full bg-white/5 text-white p-4 pl-12 rounded-xl border border-white/10 focus:outline-none focus:border-white/20"
         />
-        <IconSearch className="absolute left-4 top-4 h-5 w-5 text-white/40" />
+        <Icon icon={IconSearch} className="absolute left-4 top-4 h-5 w-5 text-white/40" />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -86,7 +87,7 @@ export function KnowledgeBaseView() {
                   Featured
                 </span>
               </div>
-              <IconBookmark className="h-5 w-5 text-white/40 hover:text-white/60 cursor-pointer" />
+              <Icon icon={IconBookmark} className="h-5 w-5 text-white/40 hover:text-white/60 cursor-pointer" />
             </div>
             <h2 className="text-xl font-semibold text-white/90 mb-2">
               Complete Guide to AI Assistant Features
@@ -96,7 +97,7 @@ export function KnowledgeBaseView() {
             </p>
             <button className="flex items-center gap-2 text-purple-300 hover:text-purple-400 transition-colors">
               <span>Read More</span>
-              <IconArrowRight className="h-4 w-4" />
+              <Icon icon={IconArrowRight} className="h-4 w-4" />
             </button>
           </div>
 
@@ -120,7 +121,7 @@ export function KnowledgeBaseView() {
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <IconTag className="h-4 w-4 text-white/40" />
+                <Icon icon={IconTag} className="h-4 w-4 text-white/40" />
                 {article.tags.map((tag) => (
                   <span
                     key={tag}
