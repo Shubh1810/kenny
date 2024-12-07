@@ -48,8 +48,8 @@ export function ProfileView() {
           <div className="flex items-center gap-4 mb-6">
             <div className="w-16 h-16 rounded-xl bg-neutral-300 dark:bg-neutral-700"></div>
             <div>
-              <h2 className="text-xl font-semibold text-white/90">John Doe</h2>
-              <p className="text-white/60">john.doe@example.com</p>
+              <h2 className="text-xl font-semibold text-white/90">{formData.displayName}</h2>
+              <p className="text-white/60">{formData.email}</p>
             </div>
           </div>
           
@@ -96,12 +96,12 @@ export function ProfileView() {
           {quickSettings.map((setting, index) => (
             <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer" key={index}>
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-purple-500/10 rounded-lg">
-                  <Icon icon={IconKey} className="h-5 w-5 text-purple-400" />
+                <div className={`p-2 rounded-lg ${setting.bgColor}`}>
+                  {/* TODO: Add icon */}
                 </div>
                 <div>
-                  <h3 className="text-white/90 font-medium">Security</h3>
-                  <p className="text-sm text-white/60">Password & authentication</p>
+                  <h3 className="text-white/90 font-medium">{setting.title}</h3>
+                  <p className="text-sm text-white/60">{setting.description}</p>
                 </div>
               </div>
             </div>
