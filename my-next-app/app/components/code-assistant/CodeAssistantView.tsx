@@ -3,11 +3,7 @@
 import { useState } from "react";
 import { IconBrandGithub, IconCode, IconBrain } from "@tabler/icons-react";
 import { cn } from "../../lib/utils";
-
-// Simple icon wrapper
-const Icon = ({ icon: IconComponent, className }: { icon: any, className?: string }) => {
-  return <IconComponent className={className} />;
-};
+import { Icon } from "../shared/Icon";
 
 export function CodeAssistantView() {
   const [code, setCode] = useState("");
@@ -54,9 +50,7 @@ export function CodeAssistantView() {
               Get intelligent suggestions and improvements for your code
             </p>
           </div>
-          <button
-            className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
-          >
+          <button className="flex items-center gap-2">
             <Icon icon={IconBrandGithub} className="w-5 h-5" />
             <span>Connect GitHub</span>
           </button>

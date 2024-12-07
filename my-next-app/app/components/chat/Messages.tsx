@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { IconSearch, IconSend } from "@tabler/icons-react";
+import { Icon } from "../shared/Icon";
 
 interface ChatType {
   id: string;
@@ -42,6 +44,7 @@ export function MessagesView() {
       {/* Chat List */}
       <div className="w-80 flex flex-col bg-white/5 rounded-xl border border-white/10">
         <div className="p-4 border-b border-white/10">
+          <Icon icon={IconSearch} className="w-5 h-5" />
           <input
             type="text"
             placeholder="Search messages..."
