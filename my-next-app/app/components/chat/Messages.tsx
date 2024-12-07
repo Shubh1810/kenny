@@ -2,8 +2,6 @@
 
 import { IconSearch, IconSend, IconMoodSmile, IconPaperclip } from "@tabler/icons-react";
 import { useState } from "react";
-import type { TablerIconsProps } from "@tabler/icons-react";
-
 
 interface ChatType {
   id: string;
@@ -16,7 +14,7 @@ interface ChatType {
 }
 
 type IconComponentProps = {
-  icon: React.FC<TablerIconsProps>;
+  icon: React.ElementType;
   className?: string;
 };
 
