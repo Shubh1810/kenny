@@ -94,9 +94,7 @@ export function CodeAssistantView() {
                 placeholder="Paste your code here..."
               />
               <div className="absolute bottom-4 right-4 flex gap-2">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                <button
                   onClick={handleSubmit}
                   disabled={!code.trim() || loading}
                   className={cn(
@@ -111,7 +109,7 @@ export function CodeAssistantView() {
                     <Icon icon={IconBrain} className="w-5 h-5" />
                   )}
                   <span>Analyze</span>
-                </motion.button>
+                </button>
               </div>
             </div>
           </div>
@@ -127,15 +125,12 @@ export function CodeAssistantView() {
             {suggestions.length > 0 ? (
               <div className="space-y-4">
                 {suggestions.map((suggestion, index) => (
-                  <motion.div
+                  <div
                     key={index}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
                     className="bg-white/5 rounded-lg p-4"
                   >
                     <p className="text-white/90">{suggestion}</p>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             ) : (
@@ -145,34 +140,6 @@ export function CodeAssistantView() {
               </div>
             )}
           </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="mt-6 flex items-center justify-center gap-4">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
-          >
-            <Icon icon={IconSend} className="w-5 h-5" />
-            <span>Send to AI</span>
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
-          >
-            <Icon icon={IconCopy} className="w-5 h-5" />
-            <span>Copy Code</span>
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
-          >
-            <Icon icon={IconDownload} className="w-5 h-5" />
-            <span>Download Code</span>
-          </motion.button>
         </div>
       </div>
     </div>
