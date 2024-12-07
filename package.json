@@ -4,11 +4,11 @@
     "my-next-app"
   ],
   "scripts": {
-    "frontend:dev": "cd my-next-app && npm run dev",
-    "frontend:build": "cd my-next-app && npm run build",
-    "frontend:start": "cd my-next-app && npm run start",
-    "build": "npm run frontend:build",
-    "start": "npm run frontend:start",
+    "app:dev": "cd my-next-app && npm run dev",
+    "app:build": "cd my-next-app && npm run build",
+    "app:start": "cd my-next-app && npm run start",
+    "build": "npm run app:build",
+    "start": "npm run app:start",
     "lint": "cd my-next-app && npm run lint"
   },
   "dependencies": {
