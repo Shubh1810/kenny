@@ -1,8 +1,8 @@
-import { Icon as TablerIcon } from "@tabler/icons-react";
+import { Icon as TablerIcon, TablerIconsProps } from "@tabler/icons-react";
 import React from "react";
 
 interface IconProps {
-  icon: typeof TablerIcon;
+  icon: React.ComponentType<TablerIconsProps>;
   className?: string;
 }
 
