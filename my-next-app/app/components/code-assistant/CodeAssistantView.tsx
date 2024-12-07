@@ -1,9 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { IconBrandGithub, IconCode, IconBrain, IconSend, IconCopy, IconDownload } from "@tabler/icons-react";
-import { motion } from "framer-motion";
+import { IconBrandGithub, IconCode, IconBrain } from "@tabler/icons-react";
 import { cn } from "../../lib/utils";
+
+// Simple icon wrapper
+const Icon = ({ icon: IconComponent, className }: { icon: any, className?: string }) => {
+  return <IconComponent className={className} />;
+};
 
 export function CodeAssistantView() {
   const [code, setCode] = useState("");
@@ -53,7 +57,7 @@ export function CodeAssistantView() {
           <button
             className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
           >
-            <IconBrandGithub className="w-5 h-5" />
+            <Icon icon={IconBrandGithub} className="w-5 h-5" />
             <span>Connect GitHub</span>
           </button>
         </div>
@@ -104,7 +108,7 @@ export function CodeAssistantView() {
                   {loading ? (
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   ) : (
-                    <IconBrain className="w-5 h-5" />
+                    <Icon icon={IconBrain} className="w-5 h-5" />
                   )}
                   <span>Analyze</span>
                 </motion.button>
@@ -115,7 +119,7 @@ export function CodeAssistantView() {
           {/* Suggestions Panel */}
           <div className="bg-white/5 border border-white/10 rounded-xl p-6">
             <div className="flex items-center gap-2 mb-6">
-              <IconCode className="w-6 h-6 text-blue-400" />
+              <Icon icon={IconCode} className="w-6 h-6 text-blue-400" />
               <h2 className="text-xl font-semibold text-white/90">
                 Code Suggestions
               </h2>
@@ -136,7 +140,7 @@ export function CodeAssistantView() {
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center h-[300px] text-white/50">
-                <IconBrain className="w-12 h-12 mb-4" />
+                <Icon icon={IconBrain} className="w-12 h-12 mb-4" />
                 <p>Submit your code to get AI-powered suggestions</p>
               </div>
             )}
@@ -150,7 +154,7 @@ export function CodeAssistantView() {
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
           >
-            <IconSend className="w-5 h-5" />
+            <Icon icon={IconSend} className="w-5 h-5" />
             <span>Send to AI</span>
           </motion.button>
           <motion.button
@@ -158,7 +162,7 @@ export function CodeAssistantView() {
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
           >
-            <IconCopy className="w-5 h-5" />
+            <Icon icon={IconCopy} className="w-5 h-5" />
             <span>Copy Code</span>
           </motion.button>
           <motion.button
@@ -166,7 +170,7 @@ export function CodeAssistantView() {
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
           >
-            <IconDownload className="w-5 h-5" />
+            <Icon icon={IconDownload} className="w-5 h-5" />
             <span>Download Code</span>
           </motion.button>
         </div>
