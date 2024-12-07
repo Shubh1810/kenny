@@ -59,7 +59,7 @@ const CodeEvolutionView = () => {
         suggestions.
       </p>
 
-      {/* @ts-ignore -- MonacoEditor types issue */}
+      {/* @ts-expect-error -- MonacoEditor has incomplete types for Next.js */}
       <MonacoEditor
         height="300px"
         defaultLanguage="javascript"
