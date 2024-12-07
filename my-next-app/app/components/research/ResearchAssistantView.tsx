@@ -2,24 +2,9 @@
 
 import { useState } from "react";
 import { IconSearch, IconBookmark, IconShare, IconLoader, IconFilter } from "@tabler/icons-react";
-import { motion, HTMLMotionProps } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "../../lib/utils";
-
-type MotionProps = {
-  className?: string;
- onClick?: () => void;
-  children?: React.ReactNode;
-  key?: string | number;
-  style?: React.CSSProperties;
-  whileHover?: any;
-  whileTap?: any;
-  initial?: any;
-  animate?: any;
-  disabled?: boolean;
-} & HTMLMotionProps<"div">;
-
-const MotionDiv = motion.div as unknown as React.FC<MotionProps>;
-const MotionButton = motion.button as unknown as React.FC<MotionProps>;
+import { Icon } from "../shared/Icon";
 
 export function ResearchAssistantView() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -41,7 +26,7 @@ export function ResearchAssistantView() {
 
   return (
     <div className="max-w-6xl mx-auto px-4">
-      <MotionDiv
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="space-y-6"
@@ -56,14 +41,14 @@ export function ResearchAssistantView() {
               Aggregate and summarize information from various sources.
             </p>
           </div>
-          <MotionButton
+          <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
           >
-            <IconFilter className="w-5 h-5" />
+            <Icon icon={IconFilter} className="w-5 h-5" />
             <span>Filter Results</span>
-          </MotionButton>
+          </motion.button>
         </div>
 
         {/* Search Section */}
@@ -78,7 +63,7 @@ export function ResearchAssistantView() {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <MotionButton
+            <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleSearch}
@@ -89,14 +74,14 @@ export function ResearchAssistantView() {
               )}
             >
               {isSearching ? (
-                <IconLoader className="h-5 w-5 animate-spin" />
+                <Icon icon={IconLoader} className="h-5 w-5 animate-spin" />
               ) : (
                 <div className="flex items-center gap-2">
-                  <IconSearch className="h-5 w-5" />
+                  <Icon icon={IconSearch} className="h-5 w-5" />
                   <span>Search</span>
                 </div>
               )}
-            </MotionButton>
+            </motion.button>
           </div>
         </div>
 
@@ -117,7 +102,7 @@ export function ResearchAssistantView() {
                 </div>
               ) : results.length > 0 ? (
                 results.map((result, index) => (
-                  <MotionDiv
+                  <motion.div
                     key={index}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -125,24 +110,24 @@ export function ResearchAssistantView() {
                   >
                     <h3 className="text-lg font-medium text-white/90 mb-2">{result}</h3>
                     <div className="mt-2">
-                      <MotionButton
+                      <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         className="flex items-center gap-2 text-white/60 hover:text-white/80"
                       >
-                        <IconBookmark className="h-4 w-4" />
+                        <Icon icon={IconBookmark} className="h-4 w-4" />
                         <span>Save Research</span>
-                      </MotionButton>
-                      <MotionButton
+                      </motion.button>
+                      <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         className="flex items-center gap-2 text-white/60 hover:text-white/80"
                       >
-                        <IconShare className="h-4 w-4" />
+                        <Icon icon={IconShare} className="h-4 w-4" />
                         <span>Share Results</span>
-                      </MotionButton>
+                      </motion.button>
                     </div>
-                  </MotionDiv>
+                  </motion.div>
                 ))
               ) : (
                 <p className="text-white/70">No results yet.</p>
@@ -165,18 +150,18 @@ export function ResearchAssistantView() {
               <h3 className="text-lg font-medium text-white/90 mb-2">Tools</h3>
               <div className="space-y-2">
                 <button className="w-full flex items-center gap-2 text-white/60 hover:text-white/80">
-                  <IconBookmark className="h-4 w-4" />
+                  <Icon icon={IconBookmark} className="h-4 w-4" />
                   <span>Save Research</span>
                 </button>
                 <button className="w-full flex items-center gap-2 text-white/60 hover:text-white/80">
-                  <IconShare className="h-4 w-4" />
+                  <Icon icon={IconShare} className="h-4 w-4" />
                   <span>Share Results</span>
                 </button>
               </div>
             </div>
           </div>
         </div>
-      </MotionDiv>
+      </motion.div>
     </div>
   );
 }
