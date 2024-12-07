@@ -37,6 +37,23 @@ export function SettingsView() {
     { primary: "#FFD700", middle: "#FF4500", secondary: "#8A2BE2" },
   ]);
 
+  const loadPreset = (preset: ColorPreset) => {
+    setPrimaryColor(preset.primary);
+    setMiddleColor(preset.middle);
+    setSecondaryColor(preset.secondary);
+  };
+
+  const savePreset = (index: number) => {
+    const newPresets = [...presets];
+    newPresets[index] = { primary: primaryColor, middle: middleColor, secondary: secondaryColor };
+    setPresets(newPresets);
+  };
+
+  const updateThemeColors = () => {
+    // Implement theme color update logic here
+    console.log('Updating theme colors:', { primaryColor, middleColor, secondaryColor });
+  };
+
   const settingsSections = [
     {
       id: 'ai',
