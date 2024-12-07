@@ -2,7 +2,7 @@ import { Icon as TablerIcon, TablerIconsProps } from "@tabler/icons-react";
 import React from "react";
 
 interface IconProps {
-  icon: React.ComponentType<TablerIconsProps>;
+  icon: (props: TablerIconsProps) => JSX.Element;
   className?: string;
 }
 
