@@ -2,12 +2,23 @@
 
 import { IconSearch, IconSend, IconMoodSmile, IconPaperclip } from "@tabler/icons-react";
 import { useState } from "react";
+import type { Icon } from "@tabler/icons-react";
+
+interface ChatType {
+  id: string;
+  name: string;
+  avatar: string;
+  lastMessage: string;
+  time: string;
+  unread: boolean;
+  online: boolean;
+}
 
 export function MessagesView() {
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
   const [messageText, setMessageText] = useState("");
 
-  const chats = [
+  const chats: ChatType[] = [
     { 
       id: '1',
       name: 'Dhruv Maniar',
@@ -55,6 +66,10 @@ export function MessagesView() {
     },
   ];
 
+  const IconComponent = ({ icon: IconElement, className }: { icon: typeof Icon, className?: string }) => {
+    return <IconElement className={className} />;
+  };
+
   return (
     <div className="h-[calc(100vh-8rem)] flex">
       {/* Chats Sidebar */}
@@ -66,7 +81,10 @@ export function MessagesView() {
               placeholder="Search messages..."
               className="w-full bg-white/5 text-white p-2 pl-9 rounded-lg border border-white/10 focus:outline-none focus:border-white/20"
             />
-            <IconSearch className="absolute left-3 top-3 h-4 w-4 text-white/40" />
+            <IconComponent 
+              icon={IconSearch} 
+              className="absolute left-3 top-3 h-4 w-4 text-white/40" 
+            />
           </div>
         </div>
 
@@ -131,10 +149,10 @@ export function MessagesView() {
             <div className="p-4 border-t border-white/10">
               <div className="flex items-center gap-3">
                 <button className="p-2 text-white/40 hover:text-white/60 transition-colors">
-                  <IconMoodSmile className="h-5 w-5" />
+                  <IconComponent icon={IconMoodSmile} className="h-5 w-5" />
                 </button>
                 <button className="p-2 text-white/40 hover:text-white/60 transition-colors">
-                  <IconPaperclip className="h-5 w-5" />
+                  <IconComponent icon={IconPaperclip} className="h-5 w-5" />
                 </button>
                 <input
                   type="text"
@@ -144,7 +162,7 @@ export function MessagesView() {
                   className="flex-1 bg-white/5 text-white p-2 rounded-lg border border-white/10 focus:outline-none focus:border-white/20"
                 />
                 <button className="p-2 text-purple-400 hover:text-purple-300 transition-colors">
-                  <IconSend className="h-5 w-5" />
+                  <IconComponent icon={IconSend} className="h-5 w-5" />
                 </button>
               </div>
             </div>
