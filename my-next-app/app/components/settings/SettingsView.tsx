@@ -4,6 +4,7 @@ import { IconBell, IconPalette, IconLanguage, IconBrain } from "@tabler/icons-re
 import { useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import { motion, HTMLMotionProps } from "framer-motion";
+import { Icon } from "../shared/Icon";
 
 type ColorPreset = {
   primary: string;
@@ -83,7 +84,7 @@ export function SettingsView() {
   const settingsSections = [
     {
       id: 'ai',
-      icon: <IconBrain className="h-5 w-5" />,
+      icon: <Icon icon={IconBrain} className="h-5 w-5" />,
       title: 'AI Settings',
       description: 'Configure AI behavior and interactions',
       content: (
@@ -120,7 +121,7 @@ export function SettingsView() {
     },
     {
       id: 'notifications',
-      icon: <IconBell className="h-5 w-5" />,
+      icon: <Icon icon={IconBell} className="h-5 w-5" />,
       title: 'Notifications',
       description: 'Manage your notification preferences',
       content: (
@@ -145,7 +146,7 @@ export function SettingsView() {
     },
     {
       id: 'appearance',
-      icon: <IconPalette className="h-5 w-5" />,
+      icon: <Icon icon={IconPalette} className="h-5 w-5" />,
       title: 'Appearance',
       description: 'Customize the look and feel',
       content: (
@@ -266,7 +267,7 @@ export function SettingsView() {
     },
     {
       id: 'language',
-      icon: <IconLanguage className="h-5 w-5" />,
+      icon: <Icon icon={IconLanguage} className="h-5 w-5" />,
       title: 'Language & Region',
       description: 'Set your preferred language',
       content: (
