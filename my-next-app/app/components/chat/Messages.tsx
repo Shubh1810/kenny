@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Search, Send } from "lucide-react";
-import type { LucideProps } from 'lucide-react';
 
 interface ChatType {
   id: string;
@@ -44,16 +42,11 @@ export function MessagesView() {
       {/* Search Bar */}
       <div className="w-80 flex flex-col bg-white/5 rounded-xl border border-white/10">
         <div className="p-4 border-b border-white/10">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search messages..."
-              className="w-full bg-white/5 text-white pl-10 pr-4 py-2 rounded-lg border border-white/10 focus:outline-none focus:border-white/20"
-            />
-            <div className="absolute left-3 top-2.5 text-white/40">
-              <Search size={20} className="text-white/40" />
-            </div>
-          </div>
+          <input
+            type="search"
+            placeholder="Search messages..."
+            className="w-full bg-white/5 text-white px-4 py-2 rounded-lg border border-white/10 focus:outline-none focus:border-white/20"
+          />
         </div>
         
         {/* Messages List */}
@@ -66,7 +59,12 @@ export function MessagesView() {
               }`}
               onClick={() => setSelectedChat(chat.id)}
             >
-              <div className="text-2xl">{chat.avatar}</div>
+              <div className="text-2xl relative">
+                {chat.avatar}
+                {chat.online && (
+                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-white/10"></span>
+                )}
+              </div>
               <div className="flex-1">
                 <div className="flex justify-between items-center">
                   <span className="font-medium text-white/90">{chat.name}</span>
