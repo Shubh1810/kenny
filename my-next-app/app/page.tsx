@@ -23,7 +23,6 @@ import { DataVisualizationView } from "./components/data/DataVisualizationView";
 import { ProfileView } from "./components/profile/ProfileView";
 import { ResearchAssistantView } from "./components/research/ResearchAssistantView";
 import { LearningHubView } from "./components/hub/LearningHub";
-import { KnowledgeBaseView } from "./components/knowledge-base/KnowledgeBase";
 import { MessagesView } from "./components/chat/Messages";
 import { SettingsView } from "./components/settings/SettingsView";
 import { TasksView } from "./components/tasks/TasksView";
@@ -143,13 +142,6 @@ export default function Home() {
       href: "#",
       icon: <IconGitBranch className="h-7 w-7 text-neutral-100" />,
       onClick: () => handleNavigation("versionControl"),
-    },
-    {
-      label: "Knowledge Base",
-      id: "knowledge",
-      href: "#",
-      icon: <IconBrain className="h-7 w-7 text-neutral-100" />,
-      onClick: () => handleNavigation("knowledge"),
     },
     {
       label: "Tasks",
@@ -360,8 +352,7 @@ export default function Home() {
       case 'tasks':
         return <TasksView />;
 
-      case "knowledge":
-        return <KnowledgeBaseView />;
+    
         case "profile":
           return <ProfileView />;
       case "thoughtPartner":
