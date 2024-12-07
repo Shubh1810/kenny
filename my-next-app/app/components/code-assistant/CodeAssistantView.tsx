@@ -2,25 +2,16 @@
 
 import { useState } from "react";
 import { IconBrandGithub, IconCode, IconBrain, IconSend, IconCopy, IconDownload } from "@tabler/icons-react";
-import { motion, MotionProps } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "../../lib/utils";
-
-interface CustomMotionDivProps extends MotionProps {
-  className?: string;
-  children?: React.ReactNode;
-}
-
-const MotionDiv: React.FC<CustomMotionDivProps> = motion.div;
-
-const MotionButton = motion.button as any;
-
-const MotionContainer = motion.div as any;
 
 export function CodeAssistantView() {
   const [code, setCode] = useState("");
   const [language, setLanguage] = useState("javascript");
   const [loading, setLoading] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  
+
 
   const languages = [
     "javascript",
@@ -31,6 +22,7 @@ export function CodeAssistantView() {
     "rust",
     "go",
   ];
+
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -47,7 +39,8 @@ export function CodeAssistantView() {
 
   return (
     <div className="max-w-6xl mx-auto px-4">
-      <MotionDiv
+      {/* @ts-expect-error - motion typing issue */}
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="space-y-6"
@@ -62,14 +55,15 @@ export function CodeAssistantView() {
               Get intelligent suggestions and improvements for your code
             </p>
           </div>
-          <MotionButton
+          {/* @ts-expect-error - motion typing issue */}
+          <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
           >
             <IconBrandGithub className="w-5 h-5" />
             <span>Connect GitHub</span>
-          </MotionButton>
+          </motion.button>
         </div>
 
         {/* Main Editor Section */}
@@ -104,7 +98,7 @@ export function CodeAssistantView() {
                 placeholder="Paste your code here..."
               />
               <div className="absolute bottom-4 right-4 flex gap-2">
-                <MotionButton
+                <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleSubmit}
@@ -121,7 +115,7 @@ export function CodeAssistantView() {
                     <IconBrain className="w-5 h-5" />
                   )}
                   <span>Analyze</span>
-                </MotionButton>
+                </motion.button>
               </div>
             </div>
           </div>
@@ -137,7 +131,7 @@ export function CodeAssistantView() {
             {suggestions.length > 0 ? (
               <div className="space-y-4">
                 {suggestions.map((suggestion, index) => (
-                  <MotionContainer
+                  <motion.div
                     key={index}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -145,7 +139,7 @@ export function CodeAssistantView() {
                     className="bg-white/5 rounded-lg p-4"
                   >
                     <p className="text-white/90">{suggestion}</p>
-                  </MotionContainer>
+                  </motion.div>
                 ))}
               </div>
             ) : (
@@ -159,32 +153,32 @@ export function CodeAssistantView() {
 
         {/* Action Buttons */}
         <div className="mt-6 flex items-center justify-center gap-4">
-          <MotionButton
+          <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
           >
             <IconSend className="w-5 h-5" />
             <span>Send to AI</span>
-          </MotionButton>
-          <MotionButton
+          </motion.button>
+          <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
           >
             <IconCopy className="w-5 h-5" />
             <span>Copy Code</span>
-          </MotionButton>
-          <MotionButton
+          </motion.button>
+          <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
           >
             <IconDownload className="w-5 h-5" />
             <span>Download Code</span>
-          </MotionButton>
+          </motion.button>
         </div>
-      </MotionDiv>
+      </motion.div>
     </div>
   );
 }
