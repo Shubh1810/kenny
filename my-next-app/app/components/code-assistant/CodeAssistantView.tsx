@@ -51,7 +51,7 @@ export function CodeAssistantView() {
             </p>
           </div>
           <button className="flex items-center gap-2">
-            <Icon icon={IconBrandGithub} className="w-5 h-5" />
+            <Icon icon={(props) => <IconBrandGithub {...props} />} className="w-5 h-5" />
             <span>Connect GitHub</span>
           </button>
         </div>
