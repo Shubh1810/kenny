@@ -1,16 +1,8 @@
 // app/components/code-evolution/CodeEvolutionView.tsx
-
 "use client";
 
 import React, { useState, useCallback } from "react";
 import { useEffect } from "react";
-import dynamic from 'next/dynamic';
-
-// Dynamically import MonacoEditor with no SSR
-const MonacoEditor = dynamic(
-  () => import('@monaco-editor/react'),
-  { ssr: false }
-);
 
 const CodeEvolutionView = () => {
   const [code, setCode] = useState(`// Start typing your code here...\n`);
@@ -59,21 +51,11 @@ const CodeEvolutionView = () => {
         suggestions.
       </p>
 
-      {/* @ts-expect-error -- MonacoEditor has incomplete types for Next.js */}
-      <MonacoEditor
-        height="300px"
-        defaultLanguage="javascript"
+      <textarea
         value={code}
-        theme="vs-dark"
-        onChange={(value: string | undefined) => setCode(value || "")}
-        options={{
-          minimap: { enabled: false },
-          fontSize: 14,
-          lineNumbers: "on",
-          roundedSelection: false,
-          scrollBeyondLastLine: false,
-          automaticLayout: true,
-        }}
+        onChange={(e) => setCode(e.target.value)}
+        className="w-full h-[300px] bg-gray-800 text-gray-100 p-4 rounded-lg font-mono text-sm"
+        placeholder="// Start typing your code here..."
       />
 
       <div className="mt-4">
