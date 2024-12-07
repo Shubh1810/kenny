@@ -1,8 +1,5 @@
 "use client";
 
-import { IconChartPie, IconChartLine, IconDownload } from "@tabler/icons-react";
-import { Icon } from "../shared/Icon";
-
 export function DataVisualizationView() {
   const metrics = [
     { label: "Total Users", value: "1,234", change: "+12%", trend: "up" },
@@ -41,20 +38,24 @@ export function DataVisualizationView() {
         <div className="bg-white/5 p-6 rounded-xl border border-white/10">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-semibold text-white/90">Usage Analytics</h2>
-            <Icon icon={IconDownload} className="h-5 w-5 text-white/40 hover:text-white/60 cursor-pointer" />
+            <button className="text-white/40 hover:text-white/60 transition-colors">
+              Download
+            </button>
           </div>
-          <div className="h-64 flex items-center justify-center">
-            <Icon icon={IconChartLine} className="h-24 w-24 text-white/20" />
+          <div className="h-64 flex items-center justify-center text-white/20">
+            Chart Area
           </div>
         </div>
 
         <div className="bg-white/5 p-6 rounded-xl border border-white/10">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-semibold text-white/90">Distribution</h2>
-            <Icon icon={IconDownload} className="h-5 w-5 text-white/40 hover:text-white/60 cursor-pointer" />
+            <button className="text-white/40 hover:text-white/60 transition-colors">
+              Download
+            </button>
           </div>
-          <div className="h-64 flex items-center justify-center">
-            <Icon icon={IconChartPie} className="h-24 w-24 text-white/20" />
+          <div className="h-64 flex items-center justify-center text-white/20">
+            Chart Area
           </div>
         </div>
       </div>
