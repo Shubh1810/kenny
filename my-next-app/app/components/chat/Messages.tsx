@@ -1,6 +1,5 @@
 "use client";
 
-import { IconSearch, IconSend, IconMoodSmile, IconPaperclip } from "@tabler/icons-react";
 import { useState } from "react";
 
 interface ChatType {
@@ -12,11 +11,6 @@ interface ChatType {
   unread: boolean;
   online: boolean;
 }
-
-type IconComponentProps = {
-  icon: React.ElementType;
-  className?: string;
-};
 
 export function MessagesView() {
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
@@ -32,81 +26,41 @@ export function MessagesView() {
       unread: true,
       online: true
     },
-    {
-      id: '2',
-      name: 'Yash Sheth',
-      avatar: '👩‍💼',
-      lastMessage: 'Hey, can we discuss the new project?',
-      time: '10:30 AM',
-      unread: true,
-      online: true
-    },
     { 
       id: '2',
-      name: 'Param Khanna',
+      name: 'Yash Sheth',
       avatar: '👨‍💻',
       lastMessage: 'The designs look great!',
       time: 'Yesterday',
       unread: false,
       online: true
-    },
-    { 
-      id: '3',
-      name: 'Sebastian Salinas',
-      avatar: '👩‍🎨',
-      lastMessage: 'Meeting at 3 PM?',
-      time: 'Yesterday',
-      unread: false,
-      online: false
-    },
-    { 
-      id: '4',
-      name: 'Aaryan Mittal',
-      avatar: '👨‍💻',
-      lastMessage: 'Can you review the code?',
-      time: 'Yesterday',
-      unread: false,
-      online: false
-    },
+    }
   ];
-
-  const IconComponent = ({ icon: IconElement, className }: IconComponentProps) => {
-    return <IconElement className={className} />;
-  };
 
   return (
     <div className="h-[calc(100vh-8rem)] flex">
-      {/* Chats Sidebar */}
+      {/* Chat List */}
       <div className="w-80 flex flex-col bg-white/5 rounded-xl border border-white/10">
         <div className="p-4 border-b border-white/10">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search messages..."
-              className="w-full bg-white/5 text-white p-2 pl-9 rounded-lg border border-white/10 focus:outline-none focus:border-white/20"
-            />
-            <IconComponent 
-              icon={IconSearch} 
-              className="absolute left-3 top-3 h-4 w-4 text-white/40" 
-            />
-          </div>
+          <input
+            type="text"
+            placeholder="Search messages..."
+            className="w-full bg-white/5 text-white p-2 rounded-lg border border-white/10 focus:outline-none focus:border-white/20"
+          />
         </div>
 
+        {/* Chat List */}
         <div className="flex-1 overflow-y-auto">
           {chats.map(chat => (
             <div
               key={chat.id}
               onClick={() => setSelectedChat(chat.id)}
-              className={`flex items-center p-4 cursor-pointer transition-colors duration-200 border-b border-white/5
-                ${selectedChat === chat.id ? 'bg-white/10' : 'hover:bg-white/5'}`}
+              className={`flex items-center p-4 cursor-pointer hover:bg-white/5 ${
+                selectedChat === chat.id ? 'bg-white/10' : ''
+              }`}
             >
-              <div className="relative">
-                <div className="w-10 h-10 flex items-center justify-center text-2xl rounded-xl bg-white/5">
-                  {chat.avatar}
-                </div>
-                {chat.online && (
-                  <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#1a0b2e]" />
-                )}
+              <div className="w-10 h-10 flex items-center justify-center text-2xl rounded-xl bg-white/5">
+                {chat.avatar}
               </div>
               <div className="ml-4 flex-1 min-w-0">
                 <div className="flex items-center justify-between">
