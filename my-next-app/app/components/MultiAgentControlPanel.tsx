@@ -56,7 +56,7 @@ export function MultiAgentControlPanel() {
         animate={{ y: 0 }}
         className="flex justify-between items-center mb-8"
       >
-        <h1 className="text-3xl font-bold text-white">Multi-Agent Control Panel</h1>
+        <h1 className="text-3xl font-bold text-white">Multi-Agentic Control Panel</h1>
         <MotionButton
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
