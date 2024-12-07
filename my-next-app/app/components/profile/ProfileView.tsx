@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { IconKey, IconBell, IconPalette } from "@tabler/icons-react";
+import { Icon } from "../shared/Icon";
 
 export function ProfileView() {
   const [formData, setFormData] = useState({
@@ -57,6 +58,9 @@ export function ProfileView() {
             <div>
               <label className="block text-sm text-white/60 mb-1">Bio</label>
               <textarea
+                name="bio"
+                value={formData.bio}
+                onChange={handleChange}
                 className="w-full bg-white/5 text-white p-2 rounded-lg border border-white/10 focus:outline-none focus:border-white/20"
                 rows={3}
                 placeholder="Tell us about yourself..."
@@ -73,7 +77,7 @@ export function ProfileView() {
           <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-purple-500/10 rounded-lg">
-                <IconKey className="h-5 w-5 text-purple-400" />
+                <Icon icon={IconKey} className="h-5 w-5 text-purple-400" />
               </div>
               <div>
                 <h3 className="text-white/90 font-medium">Security</h3>
@@ -85,7 +89,7 @@ export function ProfileView() {
           <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-blue-500/10 rounded-lg">
-                <IconBell className="h-5 w-5 text-blue-400" />
+                <Icon icon={IconBell} className="h-5 w-5 text-blue-400" />
               </div>
               <div>
                 <h3 className="text-white/90 font-medium">Notifications</h3>
@@ -97,7 +101,7 @@ export function ProfileView() {
           <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-green-500/10 rounded-lg">
-                <IconPalette className="h-5 w-5 text-green-400" />
+                <Icon icon={IconPalette} className="h-5 w-5 text-green-400" />
               </div>
               <div>
                 <h3 className="text-white/90 font-medium">Appearance</h3>
