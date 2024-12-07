@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "workspaces": [
+    "my-next-app"
+  ],
+  "scripts": {
+    "frontend:dev": "cd my-next-app && npm run dev",
+    "frontend:build": "cd my-next-app && npm run build",
+    "frontend:start": "cd my-next-app && npm run start",
+    "build": "npm run frontend:build",
+    "start": "npm run frontend:start",
+    "lint": "cd my-next-app && npm run lint"
+  },
+  "dependencies": {
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.1",
+    "framer-motion": "^10.12.6"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "postcss-nesting": "^13.0.1"
+  }
+}
