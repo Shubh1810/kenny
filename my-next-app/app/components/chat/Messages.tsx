@@ -2,7 +2,8 @@
 
 import { IconSearch, IconSend, IconMoodSmile, IconPaperclip } from "@tabler/icons-react";
 import { useState } from "react";
-import type { Icon } from "@tabler/icons-react";
+import type { TablerIconsProps } from "@tabler/icons-react";
+
 
 interface ChatType {
   id: string;
@@ -13,6 +14,11 @@ interface ChatType {
   unread: boolean;
   online: boolean;
 }
+
+type IconComponentProps = {
+  icon: React.FC<TablerIconsProps>;
+  className?: string;
+};
 
 export function MessagesView() {
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
@@ -66,7 +72,7 @@ export function MessagesView() {
     },
   ];
 
-  const IconComponent = ({ icon: IconElement, className }: { icon: typeof Icon, className?: string }) => {
+  const IconComponent = ({ icon: IconElement, className }: IconComponentProps) => {
     return <IconElement className={className} />;
   };
 
