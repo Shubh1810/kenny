@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import { IconKey, IconBell, IconPalette } from "@tabler/icons-react";
-import { Icon } from "../shared/Icon";
 
 export function ProfileView() {
   const [formData, setFormData] = useState({
@@ -18,6 +16,27 @@ export function ProfileView() {
       [name]: value
     }));
   };
+
+  const quickSettings = [
+    {
+      title: "Security",
+      description: "Password & authentication",
+      bgColor: "bg-purple-500/10",
+      textColor: "text-purple-400"
+    },
+    {
+      title: "Notifications",
+      description: "Customize alerts",
+      bgColor: "bg-blue-500/10",
+      textColor: "text-blue-400"
+    },
+    {
+      title: "Appearance",
+      description: "Theme & display",
+      bgColor: "bg-green-500/10",
+      textColor: "text-green-400"
+    }
+  ];
 
   return (
     <div>
@@ -74,41 +93,19 @@ export function ProfileView() {
 
         {/* Quick Settings */}
         <div className="space-y-4">
-          <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-purple-500/10 rounded-lg">
-                <Icon icon={IconKey} className="h-5 w-5 text-purple-400" />
-              </div>
-              <div>
-                <h3 className="text-white/90 font-medium">Security</h3>
-                <p className="text-sm text-white/60">Password & authentication</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-500/10 rounded-lg">
-                <Icon icon={IconBell} className="h-5 w-5 text-blue-400" />
-              </div>
-              <div>
-                <h3 className="text-white/90 font-medium">Notifications</h3>
-                <p className="text-sm text-white/60">Customize alerts</p>
+          {quickSettings.map((setting, index) => (
+            <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer" key={index}>
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-purple-500/10 rounded-lg">
+                  <Icon icon={IconKey} className="h-5 w-5 text-purple-400" />
+                </div>
+                <div>
+                  <h3 className="text-white/90 font-medium">Security</h3>
+                  <p className="text-sm text-white/60">Password & authentication</p>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className="bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-green-500/10 rounded-lg">
-                <Icon icon={IconPalette} className="h-5 w-5 text-green-400" />
-              </div>
-              <div>
-                <h3 className="text-white/90 font-medium">Appearance</h3>
-                <p className="text-sm text-white/60">Theme & display</p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

@@ -1,10 +1,8 @@
 "use client";
 
-import { IconBell, IconPalette, IconLanguage, IconBrain } from "@tabler/icons-react";
 import { useState } from "react";
-import { HexColorPicker } from "react-colorful";
 import { motion, HTMLMotionProps } from "framer-motion";
-import { Icon } from "../shared/Icon";
+import { HexColorPicker } from "react-colorful";
 
 type ColorPreset = {
   primary: string;
@@ -18,11 +16,6 @@ type MotionProps = {
   children?: React.ReactNode;
   key?: string | number;
   style?: React.CSSProperties;
-  whileHover?: any;
-  whileTap?: any;
-  initial?: any;
-  animate?: any;
-  disabled?: boolean;
 } & HTMLMotionProps<"div">;
 
 const MotionDiv = motion.div as unknown as React.FC<MotionProps>;
@@ -44,47 +37,9 @@ export function SettingsView() {
     { primary: "#FFD700", middle: "#FF4500", secondary: "#8A2BE2" },
   ]);
 
-  const savePreset = (index: number) => {
-    const newPresets = [...presets];
-    newPresets[index] = { primary: primaryColor, middle: middleColor, secondary: secondaryColor };
-    setPresets(newPresets);
-  };
-
-  const loadPreset = (preset: ColorPreset) => {
-    setPrimaryColor(preset.primary);
-    setMiddleColor(preset.middle);
-    setSecondaryColor(preset.secondary);
-    updateThemeColors();
-  };
-
-  const updateThemeColors = () => {
-    document.documentElement.style.setProperty('--primary-color', primaryColor);
-    document.documentElement.style.setProperty('--middle-color', middleColor);
-    document.documentElement.style.setProperty('--secondary-color', secondaryColor);
-    
-    const sidebarGradients = document.querySelectorAll('.sidebar-gradient');
-    sidebarGradients.forEach(element => {
-      element.classList.remove('from-[#0A0F1C]', 'via-[#1B2341]', 'to-[#2D3867]');
-      element.classList.add(
-        `from-[${primaryColor}]`,
-        `via-[${middleColor}]`,
-        `to-[${secondaryColor}]`
-      );
-    });
-
-    const pageBackground = document.querySelector('.page-background');
-    if (pageBackground) {
-      pageBackground.setAttribute(
-        'style',
-        `background: linear-gradient(to bottom right, ${primaryColor}, ${middleColor}, ${secondaryColor})`
-      );
-    }
-  };
-
   const settingsSections = [
     {
       id: 'ai',
-      icon: <Icon icon={IconBrain} className="h-5 w-5" />,
       title: 'AI Settings',
       description: 'Configure AI behavior and interactions',
       content: (
@@ -121,7 +76,6 @@ export function SettingsView() {
     },
     {
       id: 'notifications',
-      icon: <Icon icon={IconBell} className="h-5 w-5" />,
       title: 'Notifications',
       description: 'Manage your notification preferences',
       content: (
@@ -146,7 +100,6 @@ export function SettingsView() {
     },
     {
       id: 'appearance',
-      icon: <Icon icon={IconPalette} className="h-5 w-5" />,
       title: 'Appearance',
       description: 'Customize the look and feel',
       content: (
@@ -267,7 +220,6 @@ export function SettingsView() {
     },
     {
       id: 'language',
-      icon: <Icon icon={IconLanguage} className="h-5 w-5" />,
       title: 'Language & Region',
       description: 'Set your preferred language',
       content: (

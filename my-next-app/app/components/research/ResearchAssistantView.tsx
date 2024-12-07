@@ -1,10 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { IconSearch, IconBookmark, IconShare, IconLoader, IconFilter } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { cn } from "../../lib/utils";
-import { Icon } from "../shared/Icon";
 
 export function ResearchAssistantView() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -46,7 +44,6 @@ export function ResearchAssistantView() {
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
           >
-            <Icon icon={IconFilter} className="w-5 h-5" />
             <span>Filter Results</span>
           </motion.button>
         </div>
@@ -74,12 +71,9 @@ export function ResearchAssistantView() {
               )}
             >
               {isSearching ? (
-                <Icon icon={IconLoader} className="h-5 w-5 animate-spin" />
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
-                <div className="flex items-center gap-2">
-                  <Icon icon={IconSearch} className="h-5 w-5" />
-                  <span>Search</span>
-                </div>
+                <span>Search</span>
               )}
             </motion.button>
           </div>
@@ -115,7 +109,6 @@ export function ResearchAssistantView() {
                         whileTap={{ scale: 0.95 }}
                         className="flex items-center gap-2 text-white/60 hover:text-white/80"
                       >
-                        <Icon icon={IconBookmark} className="h-4 w-4" />
                         <span>Save Research</span>
                       </motion.button>
                       <motion.button
@@ -123,7 +116,6 @@ export function ResearchAssistantView() {
                         whileTap={{ scale: 0.95 }}
                         className="flex items-center gap-2 text-white/60 hover:text-white/80"
                       >
-                        <Icon icon={IconShare} className="h-4 w-4" />
                         <span>Share Results</span>
                       </motion.button>
                     </div>
@@ -150,11 +142,9 @@ export function ResearchAssistantView() {
               <h3 className="text-lg font-medium text-white/90 mb-2">Tools</h3>
               <div className="space-y-2">
                 <button className="w-full flex items-center gap-2 text-white/60 hover:text-white/80">
-                  <Icon icon={IconBookmark} className="h-4 w-4" />
                   <span>Save Research</span>
                 </button>
                 <button className="w-full flex items-center gap-2 text-white/60 hover:text-white/80">
-                  <Icon icon={IconShare} className="h-4 w-4" />
                   <span>Share Results</span>
                 </button>
               </div>
