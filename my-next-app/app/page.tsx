@@ -418,7 +418,7 @@ export default function Home() {
               <div className="shrink-0 border-t border-white/10 pt-4 mt-4">
                 <SidebarLink
                   link={{
-                    label: "Login",
+                    label: "/Login",
                     href: "#",
                     icon: (
                       <Image 
