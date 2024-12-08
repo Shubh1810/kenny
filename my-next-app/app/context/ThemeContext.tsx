@@ -13,23 +13,42 @@ type ThemeContextType = {
   setSecondaryColor: (color: string) => void;
 };
 
-export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+const defaultThemeContext: ThemeContextType = {
+  theme: 'dark',
+  setTheme: () => {},
+  primaryColor: "#0A0F1C",
+  setPrimaryColor: () => {},
+  middleColor: "#1B2341",
+  setMiddleColor: () => {},
+  secondaryColor: "#2D3867",
+  setSecondaryColor: () => {},
+};
+
+export const ThemeContext = createContext<ThemeContextType>(defaultThemeContext);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState('dark');
-  const [primaryColor, setPrimaryColor] = useState("#0A0F1C");
-  const [middleColor, setMiddleColor] = useState("#1B2341");
-  const [secondaryColor, setSecondaryColor] = useState("#2D3867");
+  const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState(defaultThemeContext.theme);
+  const [primaryColor, setPrimaryColor] = useState(defaultThemeContext.primaryColor);
+  const [middleColor, setMiddleColor] = useState(defaultThemeContext.middleColor);
+  const [secondaryColor, setSecondaryColor] = useState(defaultThemeContext.secondaryColor);
 
   useEffect(() => {
-    // Apply theme colors to document root or body
-    if (typeof window !== 'undefined') {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted) {
       document.documentElement.style.setProperty('--primary-color', primaryColor);
       document.documentElement.style.setProperty('--middle-color', middleColor);
       document.documentElement.style.setProperty('--secondary-color', secondaryColor);
       document.documentElement.setAttribute('data-theme', theme);
     }
-  }, [theme, primaryColor, middleColor, secondaryColor]);
+  }, [mounted, theme, primaryColor, middleColor, secondaryColor]);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <ThemeContext.Provider value={{
@@ -49,7 +68,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
 export function useTheme() {
   const context = useContext(ThemeContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useTheme must be used within a ThemeProvider');
   }
   return context;
