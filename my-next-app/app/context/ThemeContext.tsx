@@ -11,7 +11,6 @@ type ThemeContextType = {
   setMiddleColor: (color: string) => void;
   secondaryColor: string;
   setSecondaryColor: (color: string) => void;
-  mounted: boolean;
 };
 
 const defaultThemeContext: ThemeContextType = {
@@ -23,35 +22,33 @@ const defaultThemeContext: ThemeContextType = {
   setMiddleColor: () => {},
   secondaryColor: "#2D3867",
   setSecondaryColor: () => {},
-  mounted: false,
 };
 
 export const ThemeContext = createContext<ThemeContextType>(defaultThemeContext);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [mounted, setMounted] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const [theme, setTheme] = useState(defaultThemeContext.theme);
   const [primaryColor, setPrimaryColor] = useState(defaultThemeContext.primaryColor);
   const [middleColor, setMiddleColor] = useState(defaultThemeContext.middleColor);
   const [secondaryColor, setSecondaryColor] = useState(defaultThemeContext.secondaryColor);
 
   useEffect(() => {
-    setMounted(true);
-    return () => setMounted(false);
+    setIsClient(true);
   }, []);
 
   useEffect(() => {
-    if (mounted && typeof window !== 'undefined') {
-      try {
-        document.documentElement.style.setProperty('--primary-color', primaryColor);
-        document.documentElement.style.setProperty('--middle-color', middleColor);
-        document.documentElement.style.setProperty('--secondary-color', secondaryColor);
-        document.documentElement.setAttribute('data-theme', theme);
-      } catch (error) {
-        console.error('Error updating theme:', error);
-      }
+    if (!isClient) return;
+
+    try {
+      document.documentElement.style.setProperty('--primary-color', primaryColor);
+      document.documentElement.style.setProperty('--middle-color', middleColor);
+      document.documentElement.style.setProperty('--secondary-color', secondaryColor);
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch (error) {
+      console.error('Error updating theme:', error);
     }
-  }, [mounted, theme, primaryColor, middleColor, secondaryColor]);
+  }, [isClient, theme, primaryColor, middleColor, secondaryColor]);
 
   const value = {
     theme,
@@ -62,8 +59,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setMiddleColor,
     secondaryColor,
     setSecondaryColor,
-    mounted
   };
+
+  // Return null on server-side
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <ThemeContext.Provider value={value}>
