@@ -17,7 +17,7 @@ function LoginContent() {
   const { login } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const justRegistered = searchParams.get('registered') === 'true';
+  const justRegistered = Boolean(searchParams?.get('registered'));
 
   const [formData, setFormData] = useState<LoginFormData>({
     username: '',
