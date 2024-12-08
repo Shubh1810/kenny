@@ -30,10 +30,10 @@ import { SmartNotificationsView } from "./components/notifications/SmartNotifica
 import Image from 'next/image';
 import { WorkflowAutomationView } from "./components/workflow/WorkflowAutomationView";
 import { MultiAgentControlPanel } from "./components/MultiAgentControlPanel";
-import CodeEvolutionView from "./components/CodeEvolutionView";
 import ThoughtPartnerView from "./components/ThoughtPartner";
 import { useAuth } from './context/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import CodeEvolutionView from "./components/CodeEvolutionView";
 
 export default function Home() {
   const [open, setOpen] = useState(false);

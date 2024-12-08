@@ -9,6 +9,7 @@ import {
   Palette, 
   Globe 
 } from "lucide-react";
+import { useTheme } from '@/context/ThemeContext';
 
 type ColorPreset = {
   primary: string;
@@ -36,14 +37,21 @@ type SettingSection = {
 };
 
 export function SettingsView() {
+  const {
+    theme,
+    setTheme,
+    primaryColor,
+    setPrimaryColor,
+    middleColor,
+    setMiddleColor,
+    secondaryColor,
+    setSecondaryColor
+  } = useTheme();
+
   const [notifications, setNotifications] = useState(true);
-  const [theme, setTheme] = useState('dark');
   const [language, setLanguage] = useState('english');
   const [aiLevel, setAiLevel] = useState('advanced');
   const [aiSuggestions, setAiSuggestions] = useState(true);
-  const [primaryColor, setPrimaryColor] = useState("#0A0F1C");
-  const [middleColor, setMiddleColor] = useState("#1B2341");
-  const [secondaryColor, setSecondaryColor] = useState("#2D3867");
 
   const [presets, setPresets] = useState<ColorPreset[]>([
     { primary: "#0A0F1C", middle: "#1B2341", secondary: "#2D3867" },
@@ -64,8 +72,7 @@ export function SettingsView() {
   };
 
   const updateThemeColors = () => {
-    // Implement theme color update logic here
-    console.log('Updating theme colors:', { primaryColor, middleColor, secondaryColor });
+    console.log('Theme colors updated:', { primaryColor, middleColor, secondaryColor });
   };
 
   const settingsSections = [
