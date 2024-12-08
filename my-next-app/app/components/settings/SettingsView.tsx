@@ -3,6 +3,12 @@
 import { useState } from "react";
 import { motion, HTMLMotionProps } from "framer-motion";
 import { HexColorPicker } from "react-colorful";
+import { 
+  Bot, 
+  Bell, 
+  Palette, 
+  Globe 
+} from "lucide-react";
 
 type ColorPreset = {
   primary: string;
@@ -20,6 +26,14 @@ type MotionProps = {
 
 const MotionDiv = motion.div as unknown as React.FC<MotionProps>;
 const MotionButton = motion.button as unknown as React.FC<MotionProps>;
+
+type SettingSection = {
+  id: string;
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  content: React.ReactNode;
+};
 
 export function SettingsView() {
   const [notifications, setNotifications] = useState(true);
@@ -59,6 +73,7 @@ export function SettingsView() {
       id: 'ai',
       title: 'AI Settings',
       description: 'Configure AI behavior and interactions',
+      icon: <Bot className="w-5 h-5" />,
       content: (
         <div className="space-y-4">
           <div>
@@ -95,6 +110,7 @@ export function SettingsView() {
       id: 'notifications',
       title: 'Notifications',
       description: 'Manage your notification preferences',
+      icon: <Bell className="w-5 h-5" />,
       content: (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
@@ -119,6 +135,7 @@ export function SettingsView() {
       id: 'appearance',
       title: 'Appearance',
       description: 'Customize the look and feel',
+      icon: <Palette className="w-5 h-5" />,
       content: (
         <div className="space-y-4">
           <div>
@@ -239,6 +256,7 @@ export function SettingsView() {
       id: 'language',
       title: 'Language & Region',
       description: 'Set your preferred language',
+      icon: <Globe className="w-5 h-5" />,
       content: (
         <div>
           <label className="block text-sm text-white/60 mb-1">Language</label>
@@ -264,7 +282,7 @@ export function SettingsView() {
       </p>
 
       <div className="space-y-6">
-        {settingsSections.map((section) => (
+        {settingsSections.map((section: SettingSection) => (
           <div
             key={section.id}
             className="bg-white/5 p-6 rounded-xl border border-white/10"
