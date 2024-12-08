@@ -9,7 +9,7 @@ import {
   Palette, 
   Globe 
 } from "lucide-react";
-import { useTheme } from '@/context/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 
 type ColorPreset = {
   primary: string;
