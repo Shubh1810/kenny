@@ -37,29 +37,36 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
+    return () => setMounted(false);
   }, []);
 
   useEffect(() => {
     if (mounted && typeof window !== 'undefined') {
-      document.documentElement.style.setProperty('--primary-color', primaryColor);
-      document.documentElement.style.setProperty('--middle-color', middleColor);
-      document.documentElement.style.setProperty('--secondary-color', secondaryColor);
-      document.documentElement.setAttribute('data-theme', theme);
+      try {
+        document.documentElement.style.setProperty('--primary-color', primaryColor);
+        document.documentElement.style.setProperty('--middle-color', middleColor);
+        document.documentElement.style.setProperty('--secondary-color', secondaryColor);
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (error) {
+        console.error('Error updating theme:', error);
+      }
     }
   }, [mounted, theme, primaryColor, middleColor, secondaryColor]);
 
+  const value = {
+    theme,
+    setTheme,
+    primaryColor,
+    setPrimaryColor,
+    middleColor,
+    setMiddleColor,
+    secondaryColor,
+    setSecondaryColor,
+    mounted
+  };
+
   return (
-    <ThemeContext.Provider value={{
-      theme,
-      setTheme,
-      primaryColor,
-      setPrimaryColor,
-      middleColor,
-      setMiddleColor,
-      secondaryColor,
-      setSecondaryColor,
-      mounted
-    }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );
@@ -71,4 +78,4 @@ export function useTheme() {
     throw new Error('useTheme must be used within a ThemeProvider');
   }
   return context;
-} 
+}
