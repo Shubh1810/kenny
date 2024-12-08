@@ -11,6 +11,7 @@ type ThemeContextType = {
   setMiddleColor: (color: string) => void;
   secondaryColor: string;
   setSecondaryColor: (color: string) => void;
+  mounted: boolean;
 };
 
 const defaultThemeContext: ThemeContextType = {
@@ -22,6 +23,7 @@ const defaultThemeContext: ThemeContextType = {
   setMiddleColor: () => {},
   secondaryColor: "#2D3867",
   setSecondaryColor: () => {},
+  mounted: false,
 };
 
 export const ThemeContext = createContext<ThemeContextType>(defaultThemeContext);
@@ -38,17 +40,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (mounted) {
+    if (mounted && typeof window !== 'undefined') {
       document.documentElement.style.setProperty('--primary-color', primaryColor);
       document.documentElement.style.setProperty('--middle-color', middleColor);
       document.documentElement.style.setProperty('--secondary-color', secondaryColor);
       document.documentElement.setAttribute('data-theme', theme);
     }
   }, [mounted, theme, primaryColor, middleColor, secondaryColor]);
-
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <ThemeContext.Provider value={{
@@ -59,7 +57,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       middleColor,
       setMiddleColor,
       secondaryColor,
-      setSecondaryColor
+      setSecondaryColor,
+      mounted
     }}>
       {children}
     </ThemeContext.Provider>
