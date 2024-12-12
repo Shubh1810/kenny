@@ -98,7 +98,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const register = async (username: string, email: string, password: string): Promise<void> => {
         try {
-            console.log('Attempting registration at:', API_ENDPOINTS.register);
+            console.log('Attempting registration with:', { username, email });
+            console.log('Registration endpoint:', API_ENDPOINTS.register);
             
             const response = await fetch(API_ENDPOINTS.register, {
                 method: 'POST',
@@ -109,21 +110,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 body: JSON.stringify({
                     username,
                     email,
-                    password
+                    password,
                 }),
-                mode: 'cors'
+                credentials: 'include',
             });
+
+            console.log('Registration response status:', response.status);
 
             let data;
             try {
                 data = await response.json();
+                console.log('Registration response:', data);
             } catch (e) {
                 console.error('Error parsing response:', e);
                 throw new Error('Server response was not in the expected format');
             }
 
             if (!response.ok) {
-                // Handle specific error cases
                 if (response.status === 409) {
                     throw new Error('Username or email already exists');
                 }
