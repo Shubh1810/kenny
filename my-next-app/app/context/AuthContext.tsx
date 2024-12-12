@@ -4,7 +4,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { useRouter } from 'next/navigation';
 
 // Dynamic API URL that works for both local and production
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://kira-fastapi.onrender.com';
 
 // For debugging - remove this in production
 console.log('Current API URL:', API_BASE_URL);
