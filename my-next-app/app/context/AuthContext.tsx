@@ -98,41 +98,53 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const register = async (username: string, email: string, password: string): Promise<void> => {
         try {
-            console.log('Attempting registration at:', API_ENDPOINTS.register);
+            // Debug registration attempt
+            console.log('%c Registration Attempt', 'background: #222; color: #bada55');
+            console.log('1. Starting registration with:', { username, email });
+            console.log('2. Registration endpoint:', API_ENDPOINTS.register);
             
             const response = await fetch(API_ENDPOINTS.register, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                 },
                 body: JSON.stringify({
                     username,
                     email,
-                    password
-                })
+                    password,
+                }),
+                credentials: 'include',
             });
-    
-            console.log('Registration response status:', response.status);
-    
-            const data = await response.json();
-            console.log('Registration response:', data);
-    
+
+            // Debug response
+            console.log('3. Registration response status:', response.status);
+            console.log('4. Response headers:', Object.fromEntries(response.headers.entries()));
+
+            let data;
+            try {
+                data = await response.json();
+                console.log('5. Registration response data:', data);
+            } catch (e) {
+                console.error('6. Error parsing response:', e);
+                throw new Error('Server response was not in the expected format');
+            }
+
             if (!response.ok) {
-                // Handle specific error cases
-                if (response.status === 400) {
-                    throw new Error(data.detail || 'Email already registered');
+                console.error('7. Registration failed with status:', response.status);
+                console.error('8. Error details:', data);
+                if (response.status === 409) {
+                    throw new Error('Username or email already exists');
                 }
                 throw new Error(data.detail || 'Registration failed');
             }
-    
-            // Don't automatically log in, just redirect to login page
+
+            console.log('9. Registration successful!');
+            // After successful registration, redirect to login
             router.push('/login?registered=true');
         } catch (error) {
-            console.error('Registration error:', error);
-            if (error instanceof Error) {
-                throw error;
-            }
-            throw new Error('Registration failed');
+            console.error('10. Registration error:', error);
+            throw error;
         }
     };
 
