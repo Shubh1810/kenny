@@ -98,52 +98,53 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const register = async (username: string, email: string, password: string): Promise<void> => {
         try {
-            // Debug registration attempt
-            console.log('%c Registration Attempt', 'background: #222; color: #bada55');
-            console.log('1. Starting registration with:', { username, email });
-            console.log('2. Registration endpoint:', API_ENDPOINTS.register);
-            
+            console.group('%c Registration Debug', 'background: #222; color: #bada55');
+            console.log('1. Request Data:', { username, email });
+            console.log('2. API Endpoint:', API_ENDPOINTS.register);
+
             const response = await fetch(API_ENDPOINTS.register, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json',
                 },
                 body: JSON.stringify({
                     username,
                     email,
                     password,
-                }),
-                credentials: 'include',
+                })
             });
 
-            // Debug response
-            console.log('3. Registration response status:', response.status);
-            console.log('4. Response headers:', Object.fromEntries(response.headers.entries()));
-
+            console.log('3. Response Status:', response.status);
+            
             let data;
             try {
                 data = await response.json();
-                console.log('5. Registration response data:', data);
+                console.log('4. Response Data:', data);
             } catch (e) {
-                console.error('6. Error parsing response:', e);
-                throw new Error('Server response was not in the expected format');
+                console.error('5. JSON Parse Error:', e);
+                throw new Error('Invalid server response format');
             }
 
             if (!response.ok) {
-                console.error('7. Registration failed with status:', response.status);
-                console.error('8. Error details:', data);
-                if (response.status === 409) {
+                console.error('6. Error Response:', data);
+                if (response.status === 422) {
+                    throw new Error('Invalid input data');
+                } else if (response.status === 409) {
                     throw new Error('Username or email already exists');
+                } else if (response.status === 500) {
+                    throw new Error('Internal server error - please try again');
                 }
                 throw new Error(data.detail || 'Registration failed');
             }
 
-            console.log('9. Registration successful!');
+            console.log('7. Registration Successful');
+            console.groupEnd();
+
             // After successful registration, redirect to login
             router.push('/login?registered=true');
         } catch (error) {
-            console.error('10. Registration error:', error);
+            console.error('8. Registration Error:', error);
+            console.groupEnd();
             throw error;
         }
     };
