@@ -11,10 +11,10 @@ console.log('Current API URL:', API_BASE_URL);
 
 // Update API_ENDPOINTS to use the dynamic base URL
 const API_ENDPOINTS = {
-    login: `${API_BASE_URL}/login`,
-    register: `${API_BASE_URL}/register`,
-    me: `${API_BASE_URL}/users/me`,
-    logout: `${API_BASE_URL}/logout`,
+    login: `${API_BASE_URL}/api/v1/auth/login`,
+    register: `${API_BASE_URL}/api/v1/auth/register`,
+    me: `${API_BASE_URL}/api/v1/users/me`,
+    logout: `${API_BASE_URL}/api/v1/auth/logout`,
 };
 
 interface User {
