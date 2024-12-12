@@ -121,9 +121,10 @@ export const DesktopSidebar = ({
   const { open, setOpen, animate } = useSidebar();
   return (
     <MotionDiv
-      className={cn(
-        "h-screen px-4 py-6 hidden md:flex md:flex-col sidebar-gradient bg-gradient-to-b from-[#000238] via-[#1c0018] to-[#140405] flex-shrink-0 shadow-xl overflow-x-hidden"
-      )}
+    className={cn(
+      "h-screen px-4 py-6 hidden md:flex md:flex-col flex-shrink-0 shadow-xl overflow-x-hidden",
+      "bg-gradient-to-b from-[#1a1a1a] via-[#0a0a0a] to-[#050505]",
+    )}
       animate={{
         width: animate ? (open ? "280px" : "80px") : "280px",
       }}

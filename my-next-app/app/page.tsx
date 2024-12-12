@@ -2,7 +2,6 @@
 
 import { Sidebar, SidebarBody, SidebarLink } from "./components/ui/Sidebar";
 import {
-  IconHome,
   IconLogout,
   IconMessages,
   IconBrain,
@@ -35,10 +34,19 @@ import { useAuth } from './context/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import CodeEvolutionView from "./components/CodeEvolutionView";
 
+const generateInitialAvatar = (username: string | undefined) => {
+  if (!username) return null;
+  return (
+    <div className="w-[27px] h-[27px] rounded-lg bg-indigo-600 flex items-center justify-center text-white font-semibold">
+      {username.charAt(0).toUpperCase()}
+    </div>
+  );
+};
+
 export default function Home() {
   const [open, setOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('dashboard');
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   
   useEffect(() => {
     const handleNavigationRequest = (event: CustomEvent) => {
@@ -63,7 +71,17 @@ export default function Home() {
       label: "Dashboard",
       id: "dashboard",
       href: "#",
-      icon: <IconHome className="h-7 w-7 text-neutral-100" />,
+      icon: (
+        <div className="flex items-center justify-start -ml-2">
+          <Image 
+            src="/home.png" 
+            alt="Home"
+            width={43}
+            height={43}
+            className="rounded-sm"
+          />
+        </div>
+      ),
       onClick: () => handleNavigation("dashboard"),
     },
     {
@@ -179,30 +197,7 @@ export default function Home() {
       icon: <IconBrain className="h-7 w-7 text-neutral-100" />,
       onClick: () => handleNavigation("thoughtPartner"),
     },
-    {
-      label: "Time Dilation Manipulation",
-      id: "timeDilation",
-      href: "#",
-      icon: <span className="h-7 w-7 text-neutral-100 flex justify-center items-center text-2xl">⏳</span>,
-      onClick: () => handleNavigation("timeDilation"),
-    },
-    {
-      label: "Quantum Simulator",
-      id: "quantumSimulator",
-      href: "#",
-      icon: <span className="h-7 w-7 text-neutral-100 flex justify-center items-center text-2xl">🔬</span>,
-      onClick: () => handleNavigation("quantumSimulator"),
-    },
-    {
-      label: "Logout",
-      id: "logout",
-      href: "#",
-      icon: <IconLogout className="h-5 w-5 text-red-400" />,
-      onClick: () => {
-        logout();
-        handleNavigation("dashboard");
-      },
-    },
+
   ];
   const renderContent = () => {
     switch(currentPage) {
@@ -365,7 +360,11 @@ export default function Home() {
   return (
     <ProtectedRoute>
       <div className="fixed inset-0 page-background" style={{
-        background: `linear-gradient(to bottom , #000238, #000238, #1c0018, #140405)`,
+        background: `linear-gradient(to bottom, 
+          #1a1a1a,
+          #141414,
+          #0f0f12,
+          #050505`,
         zIndex: -1
       }} />
       
@@ -418,17 +417,9 @@ export default function Home() {
               <div className="shrink-0 border-t border-white/10 pt-4 mt-4">
                 <SidebarLink
                   link={{
-                    label: "/Login",
+                    label: user?.username || "Guest",
                     href: "#",
-                    icon: (
-                      <Image 
-                      src="/unknown-user.jpg" 
-                      alt="Unknown User"
-                      width={27}
-                      height={27}
-                      className="rounded-lg"
-                    />
-                  ),
+                    icon: generateInitialAvatar(user?.username),
                   }}
                   onClick={() => handleNavigation("profile")}
                   className="sidebar-text"

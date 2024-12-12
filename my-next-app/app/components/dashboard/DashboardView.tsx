@@ -164,29 +164,19 @@ export default function DashboardView() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-4 md:mb-8"
         >
-          <div className="flex justify-between items-center">
-            <MotionH1
-              className="bg-clip-text text-transparent text-left bg-gradient-to-br from-black via-gray-700 to-gray-800 dark:from-gray-100 dark:via-gray-300 dark:to-gray-500 text-4xl md:text-4xl lg:text-5xl font-sans py-2 md:py-10 relative z-20 font-bold tracking-tight"
-              initial={{ opacity: 0, y: -50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ 
-                duration: 0.8,
-                ease: "easeOut"
-              }}
-            >
-              Welcome back, {user?.username}
-            </MotionH1>
-            <MotionButton
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              onClick={logout}
-              className="px-4 py-2 text-white bg-red-600/80 hover:bg-red-700/80 rounded-md transition-colors duration-200"
-            >
-              Logout
-            </MotionButton>
-          </div>
+          <MotionH1
+            className="bg-clip-text text-transparent text-left bg-gradient-to-br from-black via-gray-700 to-gray-800 dark:from-gray-100 dark:via-gray-300 dark:to-gray-500 text-4xl md:text-4xl lg:text-5xl font-sans py-2 md:py-10 relative z-20 font-bold tracking-tight"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 0.8,
+              ease: "easeOut"
+            }}
+          >
+            Welcome back, {user?.username}
+          </MotionH1>
           <p className="text-white/70">
-            Will be able to create your account securely soon!! Keep visiting for new features. New updates every week.
+            Welcome to the beta version of the app. Keep visiting for new features. New updates every week.
           </p>
         </MotionDiv>
 
