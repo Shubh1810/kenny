@@ -98,46 +98,41 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const register = async (username: string, email: string, password: string): Promise<void> => {
         try {
-            console.log('Attempting registration with:', { username, email });
-            console.log('Registration endpoint:', API_ENDPOINTS.register);
+            console.log('Attempting registration at:', API_ENDPOINTS.register);
             
             const response = await fetch(API_ENDPOINTS.register, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json',
                 },
                 body: JSON.stringify({
                     username,
                     email,
-                    password,
-                }),
-                credentials: 'include',
+                    password
+                })
             });
-
+    
             console.log('Registration response status:', response.status);
-
-            let data;
-            try {
-                data = await response.json();
-                console.log('Registration response:', data);
-            } catch (e) {
-                console.error('Error parsing response:', e);
-                throw new Error('Server response was not in the expected format');
-            }
-
+    
+            const data = await response.json();
+            console.log('Registration response:', data);
+    
             if (!response.ok) {
-                if (response.status === 409) {
-                    throw new Error('Username or email already exists');
+                // Handle specific error cases
+                if (response.status === 400) {
+                    throw new Error(data.detail || 'Email already registered');
                 }
                 throw new Error(data.detail || 'Registration failed');
             }
-
-            // After successful registration, redirect to login
+    
+            // Don't automatically log in, just redirect to login page
             router.push('/login?registered=true');
         } catch (error) {
             console.error('Registration error:', error);
-            throw error;
+            if (error instanceof Error) {
+                throw error;
+            }
+            throw new Error('Registration failed');
         }
     };
 

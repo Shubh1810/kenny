@@ -35,26 +35,28 @@ export default function SignupPage() {
   const validateForm = (): boolean => {
     const newErrors: ValidationErrors = {};
 
-    // Username validation
+    // Username validation (3-50 characters)
     if (!formData.username.trim()) {
-      newErrors.username = 'Username is required';
-    } else if (formData.username.length < 3) {
-      newErrors.username = 'Username must be at least 3 characters';
+        newErrors.username = 'Username is required';
+    } else if (formData.username.length < 3 || formData.username.length > 50) {
+        newErrors.username = 'Username must be between 3 and 50 characters';
+    } else if (!/^[a-zA-Z0-9_-]+$/.test(formData.username)) {
+        newErrors.username = 'Username can only contain letters, numbers, underscores, and hyphens';
     }
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
+        newErrors.email = 'Email is required';
     } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+        newErrors.email = 'Please enter a valid email address';
     }
 
-    // Password validation
+    // Password validation (4 characters minimum)
     if (!formData.password) {
-      newErrors.password = 'Password is required';
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+        newErrors.password = 'Password is required';
+    } else if (formData.password.length < 4) {
+        newErrors.password = 'Password must be at least 4 characters';
     }
 
     setErrors(newErrors);
