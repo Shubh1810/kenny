@@ -71,28 +71,75 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
-    const login = async (username: string, password: string): Promise<void> => {
-        const formData = new FormData();
-        formData.append('username', username);
-        formData.append('password', password);
+    interface LoginResponse {
+        status: string;
+        data: {
+            user: {
+                id: string;
+                email: string;
+                username: string;
+            };
+            token: {
+                access_token: string;
+                token_type: string;
+                expires_in: number;
+            };
+        };
+        message: string;
+    }
 
+    const login = async (username: string, password: string): Promise<void> => {
         try {
-            console.log('Attempting login to:', API_ENDPOINTS.login);
+            console.group('%c Login Debug', 'background: #222; color: #bada55');
+            console.log('1. Login attempt for:', username);
+
             const response = await fetch(API_ENDPOINTS.login, {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: username,  // Can be username or email
+                    password: password
+                })
             });
 
-            const data = await response.json();
+            console.log('2. Response status:', response.status);
+
+            const data: LoginResponse = await response.json();
+            console.log('3. Response data:', {
+                status: data.status,
+                message: data.message,
+                user: data.data?.user ? {
+                    id: data.data.user.id,
+                    username: data.data.user.username,
+                    email: data.data.user.email
+                } : null
+            });
+
             if (!response.ok) {
-                throw new Error(data.detail || 'Login failed');
+                throw new Error(data.message || 'Login failed');
             }
 
-            localStorage.setItem('token', data.access_token);
-            await fetchUser(data.access_token);
+            if (data.status === 'success' && data.data) {
+                // Store token
+                localStorage.setItem('token', data.data.token.access_token);
+                
+                // Set user data
+                setUser(data.data.user);
+                
+                console.log('4. Login successful');
+                router.push('/');  // Redirect to dashboard
+            } else {
+                throw new Error('Invalid response format');
+            }
+
         } catch (error) {
-            console.error('Login error:', error);
+            console.error('5. Login error:', error);
+            console.groupEnd();
             throw error;
+        } finally {
+            console.groupEnd();
         }
     };
 
