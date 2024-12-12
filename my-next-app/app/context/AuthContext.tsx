@@ -4,17 +4,17 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { useRouter } from 'next/navigation';
 
 // Dynamic API URL that works for both local and production
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://kira-fastapi.onrender.com';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://kira-fastapi.onrender.com';
 
 // For debugging - remove this in production
 console.log('Current API URL:', API_BASE_URL);
 
 // Update API_ENDPOINTS to use the dynamic base URL
 const API_ENDPOINTS = {
-    login: `${API_BASE_URL}/api/v1/auth/login`,
-    register: `${API_BASE_URL}/api/v1/auth/register`,
-    me: `${API_BASE_URL}/api/v1/auth/users/me`,
-    logout: `${API_BASE_URL}/api/v1/auth/logout`,
+    login: `${API_BASE_URL}/login`,
+    register: `${API_BASE_URL}/register`,
+    me: `${API_BASE_URL}/users/me`,
+    logout: `${API_BASE_URL}/logout`,
 };
 
 interface User {
@@ -111,7 +111,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                     email,
                     password
                 }),
-                // Remove credentials to prevent CORS issues
                 mode: 'cors'
             });
 
@@ -127,23 +126,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 // Handle specific error cases
                 if (response.status === 409) {
                     throw new Error('Username or email already exists');
-                } else if (response.status === 422) {
-                    throw new Error(data.detail || 'Invalid input data');
-                } else if (response.status === 400) {
-                    throw new Error(data.detail || 'Bad request');
                 }
-                throw new Error(data.detail || `Registration failed: ${response.statusText}`);
+                throw new Error(data.detail || 'Registration failed');
             }
 
-            // If registration is successful, return without auto-login
-            return;
-
+            // After successful registration, redirect to login
+            router.push('/login?registered=true');
         } catch (error) {
             console.error('Registration error:', error);
-            if (error instanceof TypeError && error.message === 'Failed to fetch') {
-                throw new Error('Unable to connect to the server. Please check your internet connection and try again.');
-            }
-            // Re-throw the error to be handled by the component
             throw error;
         }
     };
