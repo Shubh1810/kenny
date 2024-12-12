@@ -72,14 +72,23 @@ export default function SignupPage() {
     setIsLoading(true);
 
     try {
+      console.log('Starting registration process...');
+      console.log('Form data being sent:', {
+        username: formData.username,
+        email: formData.email,
+      });
+
       await register(formData.username, formData.email, formData.password);
+      console.log('Registration successful, redirecting...');
       router.push('/login?registered=true');
     } catch (err: unknown) {
+      console.error('Detailed signup error:', err);
       const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred';
       setServerError(errorMessage);
       console.error('Signup error:', err);
     } finally {
       setIsLoading(false);
+      console.log('Registration process completed');
     }
   };
 
